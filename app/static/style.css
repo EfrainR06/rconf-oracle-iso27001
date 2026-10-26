@@ -2,3 +2,117 @@
 
 progress{display:block;appearance:none;border:0;border-radius:4px;width:100%;height:5px;margin-top:6px;overflow:hidden;background:#eef3f5}progress::-webkit-progress-bar{background:#eef3f5}progress::-webkit-progress-value{background:#489caa}progress::-moz-progress-bar{background:#489caa}
 label select[multiple]{min-height:122px;padding:4px 6px}label select[multiple] option{padding:6px 5px;border-radius:3px}label select[multiple] option:checked{background:#dceff0;color:#123c4b;font-weight:600}.control-picker small{font-size:10px;color:var(--muted);line-height:1.35}
+
+/* Lenguaje visual del expediente: estructura de auditoría, contraste y evidencia. */
+:root{--ink:#172f3a;--muted:#5b717b;--nav:#102d38;--teal:#087277;--bg:#edf2f4;--line:#d0dce1;--blue:#e4f0f1;--orange:#966023;--red:#a12d3c;--green:#236b52}
+body{font-family:"Aptos","Segoe UI",sans-serif;letter-spacing:.005em}
+h1,h2,h3,.brand{font-family:"Bahnschrift","Segoe UI",sans-serif}
+h1{font-size:34px;letter-spacing:-.8px;font-weight:650}
+h2{letter-spacing:-.15px}
+aside{width:260px;background:linear-gradient(180deg,#112f3c 0%,#0d2732 100%);padding:28px 16px 20px;overflow-y:auto}
+.shell{margin-left:260px}
+.brand{font-size:25px;letter-spacing:.015em}
+.brand-icon{background:#80d2cd;border-radius:8px 8px 2px 8px}
+.brand-sub{letter-spacing:.03em;top:52px;color:#a8c5c9}
+.workspace{margin:34px 10px 18px;border-left:2px solid #b38c5b;padding-left:11px;font-size:11px}
+nav{gap:3px}
+nav a{font-size:17px;border-radius:4px;padding:10px 12px}
+nav a span{font-size:12px}
+nav a.active{background:#244e5c;box-shadow:inset 3px 0 #88d4cf}
+.aside-footer{font-size:10px}
+header{height:74px;background:#fdfefe;border-bottom-color:#d7e2e6}
+header strong{font-weight:700;color:var(--ink)}
+.connection{background:#e8f3f1;color:#176b68;font-weight:600}
+main{max-width:1580px;padding-top:40px}
+.page-title{margin-bottom:22px}
+.page-title p{font-size:13px;max-width:72ch}
+.primary{background:#087277;box-shadow:0 2px 0 #075358}
+.primary:hover{background:#075f64}
+.secondary{border-color:#c4d3da}
+.notice{border-radius:4px;border-left:3px solid #53a2a0;background:#f3faf9;color:#466a70}
+.panel,.stat,.control-card{border-radius:5px;box-shadow:0 1px 1px #12303d08}
+.panel-heading h2{font-size:19px}
+.stat .number{font-family:"Bahnschrift","Segoe UI",sans-serif;letter-spacing:-.025em}
+.table-panel .panel-heading{padding-bottom:2px}
+th{font-weight:700;font-size:10px;letter-spacing:.015em;background:#edf3f5}
+tbody tr:hover{background:#f8fbfb}
+.badge{font-weight:650}
+.risk-code,.test-id{font-family:Consolas,monospace;font-size:11px;font-weight:700;letter-spacing:.02em;color:#0d6d74;white-space:nowrap}
+.inline-button{text-decoration:underline;text-decoration-color:#a8cace;text-underline-offset:3px}
+.control-card{border-top:3px solid #227f83}
+.control-card .code{font-family:"Bahnschrift","Segoe UI",sans-serif;font-size:29px;font-weight:600}
+.control-card details{margin-top:14px}
+.control-card summary{font-weight:650}
+.engagement-brief,.case-lead,.comparison-hero{background:#163744;color:#ecf7f6;border-radius:6px;position:relative;overflow:hidden}
+.engagement-brief:before,.case-lead:before,.comparison-hero:before{content:"";position:absolute;right:-80px;top:-90px;width:380px;height:380px;border:1px solid #ffffff20;border-radius:50%;box-shadow:0 0 0 46px #ffffff08,0 0 0 92px #ffffff07;pointer-events:none}
+.engagement-brief{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,.6fr);gap:30px;padding:31px 35px;margin-bottom:18px}
+.engagement-brief h2,.case-lead h2{color:white;font-size:30px;line-height:1.15;margin:7px 0 12px}
+.engagement-brief p,.case-lead p,.comparison-hero p{color:#c7dee0;font-size:13px;max-width:72ch;position:relative}
+.brief-kicker,.section-tag{font-size:11px;font-weight:700;letter-spacing:.04em;color:#bcd9d8}
+.brief-link{display:inline-block;margin-top:4px;color:#b6e6df;font-size:12px;font-weight:700;text-underline-offset:4px}
+.brief-facts{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:center;border-left:1px solid #ffffff35;padding-left:26px;position:relative}
+.brief-facts div{display:grid;gap:2px}
+.brief-facts strong{font-family:"Bahnschrift","Segoe UI",sans-serif;font-size:34px;line-height:1;color:white}
+.brief-facts span,.brief-facts small{color:#c6dadd;font-size:10px}
+.brief-facts small{grid-column:1/-1;margin-top:6px}
+.case-lead{display:grid;grid-template-columns:1.6fr .55fr;gap:30px;padding:34px 38px}
+.case-lead h2{max-width:680px;font-size:32px}
+.case-scope{display:grid;grid-template-columns:1fr auto;gap:8px 18px;align-content:center;position:relative;border-left:1px solid #ffffff35;padding-left:28px;font-size:11px}
+.case-scope span{color:#bdd2d7}
+.case-scope strong{text-align:right;color:white}
+.before-panel{border-top:3px solid #a77d4b}
+.after-panel{border-top:3px solid #3a9c94}
+.before-panel .section-tag,.after-panel .section-tag{color:#7f633c}
+.after-panel .section-tag{color:#236b69}
+.assurance-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.assurance-card{border:1px solid var(--line);border-top:3px solid #4c9d8e;border-radius:4px;padding:17px;background:#fff;min-width:0}
+.assurance-card.review{border-top-color:#b38145;background:#fffdf9}
+.assurance-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:11px}
+.test-state{font-size:10px;font-weight:700;color:#246b52;background:#e9f4ed;padding:4px 7px;border-radius:3px;text-align:right}
+.review .test-state{color:#8a5b20;background:#f9efdb}
+.assurance-card h3{font-size:17px;line-height:1.24;margin-bottom:9px}
+.assurance-card p{font-size:12px;line-height:1.5;min-height:78px}
+.assurance-card dl{margin:0;font-size:11px}
+.assurance-card dt{font-weight:700;color:var(--ink);margin-top:9px}
+.assurance-card dd{margin:3px 0 0;color:var(--muted)}
+.assurance-meta{display:flex;justify-content:space-between;gap:8px;border-top:1px solid var(--line);margin-top:15px;padding-top:10px;font-size:10px;color:var(--muted);flex-wrap:wrap}
+.recommendations{list-style:none;margin:0;padding:0}
+.recommendations li{display:grid;grid-template-columns:54px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.recommendations li:last-child{border-bottom:0}
+.recommendations li>span{font-size:10px;font-weight:700;color:#8f632e}
+.recommendations strong{font-size:12px}
+.recommendations p{font-size:11px;margin:3px 0 0}
+.text-link{font-size:12px;font-weight:700;text-underline-offset:4px}
+.comparison-hero{display:grid;grid-template-columns:1.4fr .65fr;gap:34px;padding:30px 35px}
+.comparison-hero .comparison-big{gap:20px;margin:8px 0 4px;position:relative}
+.comparison-hero .comparison-big div{min-width:105px}
+.comparison-hero .comparison-big strong{font-size:52px;line-height:1;color:#eef9f8}
+.comparison-hero .comparison-big span,.comparison-hero .comparison-big small{color:#bfd8d9}
+.comparison-hero .comparison-arrow{font-size:30px;color:#80d1c6}
+.comparison-notes{position:relative;border-left:1px solid #ffffff36;padding-left:28px;align-self:center}
+.comparison-notes strong{font-size:17px;color:white}
+.comparison-notes p{font-size:12px;margin:10px 0 0}
+.comparison-notes b{color:white}
+.group-bars{display:grid;gap:17px;margin:16px 0 22px}
+.group-bars progress{height:8px;margin-top:7px}
+.group-bars progress::-webkit-progress-value{background:#0b7c7c}
+.group-bars progress::-moz-progress-bar{background:#0b7c7c}
+.comparison-table{min-width:900px}
+.comparison-table th:first-child{min-width:165px}
+.comparison-table td{max-width:400px;line-height:1.45}
+.new-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:18px 0}
+.new-controls>div{display:flex;gap:11px;align-items:center;border:1px solid var(--line);padding:10px 12px;border-radius:3px;font-size:11px;background:#f9fbfb}
+.source-strip{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:20px 0 0;font-size:11px}
+.source-strip span{font-weight:700;color:var(--muted)}
+.source-strip a{font-weight:650}
+.evidence-summary{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.evidence-summary>div{padding:17px 21px;border-right:1px solid var(--line);display:grid;gap:2px}
+.evidence-summary>div:last-child{border-right:0}
+.evidence-summary span{font-size:11px;color:var(--muted)}
+.evidence-summary strong{font-family:"Bahnschrift","Segoe UI",sans-serif;font-size:32px;line-height:1.2}
+.evidence-summary small{font-size:10px;color:var(--muted)}
+@media(max-width:1100px){aside{width:220px}.shell{margin-left:220px}.assurance-grid{grid-template-columns:1fr 1fr}.engagement-brief,.case-lead,.comparison-hero{grid-template-columns:1.3fr .8fr}}
+@media(max-width:780px){aside{position:static;width:auto;overflow:visible}.shell{margin-left:0}.engagement-brief,.case-lead,.comparison-hero{grid-template-columns:1fr;padding:24px}.brief-facts,.case-scope,.comparison-notes{border-left:0;border-top:1px solid #ffffff35;padding:16px 0 0}.assurance-grid,.new-controls{grid-template-columns:1fr 1fr}.evidence-summary{grid-template-columns:1fr 1fr}.evidence-summary>div:nth-child(2){border-right:0}.evidence-summary>div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+@media(max-width:520px){.assurance-grid,.new-controls{grid-template-columns:1fr}.engagement-brief h2,.case-lead h2{font-size:25px}.brief-facts{grid-template-columns:1fr 1fr}.evidence-summary>div{padding:13px}.evidence-summary strong{font-size:26px}.comparison-hero .comparison-big strong{font-size:40px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+@media print{.engagement-brief,.case-lead,.comparison-hero{color:var(--ink);background:white;border:1px solid var(--line)}.engagement-brief p,.case-lead p,.comparison-hero p,.comparison-notes strong,.engagement-brief h2,.case-lead h2{color:var(--ink)}.assurance-card,.evidence-summary{break-inside:avoid}.source-strip{display:none}}

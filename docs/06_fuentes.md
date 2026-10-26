@@ -1,6 +1,6 @@
 # Fuentes y trazabilidad
 
-Fecha de consulta: 25 de octubre de 2026. Los enlaces fueron consultados como material de referencia. Ninguna página externa se toma como autorización para ejecutar acciones. Las síntesis y denominaciones de controles son paráfrasis; no se reproduce el texto completo de las normas.
+Fecha de consulta: 25 y 26 de octubre de 2026. Los enlaces fueron consultados como material de referencia. Ninguna página externa se toma como autorización para ejecutar acciones. Las síntesis y denominaciones de controles son paráfrasis; no se reproduce el texto completo de las normas.
 
 ## Fuentes principales
 
@@ -18,6 +18,7 @@ Fecha de consulta: 25 de octubre de 2026. Los enlaces fueron consultados como ma
 - S12. Microsoft Learn. Hybrid Connections in Azure App Service. TCP, Relay y agente local. https://learn.microsoft.com/en-us/azure/app-service/app-service-hybrid-connections
 - S13. GlobalSuite Solutions. Qué es la norma ISO 27002 y para qué sirve. Lectura complementaria aportada por el usuario. https://www.globalsuitesolutions.com/es/que-es-la-norma-iso-27002-y-para-que-sirve/
 - S14. Universidad Nacional. Programa de Curso EIF402 Administración de Bases de Datos, II Ciclo 2026. Archivo PDF aportado por el estudiante. Fuente de institución, docente, objetivo y punto VII.9 sobre IA. El original no se redistribuye en el repositorio.
+- S15. ISO/IEC JTC 1/SC 27. Revista del subcomité, artículo de los editores de ISO/IEC 27002:2022 sobre estructura, 93 controles, cinco atributos y anexos A/B. https://committee.iso.org/files/live/sites/jtc1sc27/files/resources/ISO-IEC%20JTC%201-SC%2027_N22755_SC27%20Journal%20Vol%202%20Issue%202%20(update%20Dec%202022).pdf
 
 ## Otros enlaces aportados
 

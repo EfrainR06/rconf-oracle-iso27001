@@ -4,7 +4,7 @@
 
 Se ejecutaron 12 pruebas automatizadas de API y dominio con pytest. Resultado inicial: 12 aprobadas. El almacén de datos se simuló; estas pruebas no conectaron a Oracle. También se comprobaron sintaxis JavaScript y respuesta de /health en demostración. La revisión funcional de interfaz se registra en `VERIFICACION.md` al finalizar.
 
-Las verificaciones SQL, política unificada, TCPS, conectividad desde Azure, recuperación y respaldo no se presentan como ejecutadas. No convertir resultados esperados en observados. Para cada ensayo se necesita fecha real, cuenta usada, contenedor, pasos, esperado, observado, conclusión y referencia de evidencia.
+El estudiante compartió salidas de `05_verify_runtime.sql` y `04_verify_dba.sql` ejecutadas en XEPDB1 el 26 de octubre de 2026. T07 y T08 muestran resultados esperados; T11 requiere correlación adicional de una fila de auditoría. Su transcripción y límites figuran en `07_evidencia_oracle_2026-10-26.md`. TCPS, conectividad desde Azure, recuperación y respaldo siguen sin evidencias de ejecución. Para cada ensayo se necesita fecha real, cuenta usada, contenedor, pasos, esperado, observado, conclusión y referencia del archivo original.
 
 ## Casos de aceptación
 
@@ -14,11 +14,11 @@ Las verificaciones SQL, política unificada, TCPS, conectividad desde Azure, rec
 - T04: pasar Planificar a Verificar se rechaza. Pasar Planificar a Hacer sin referencia se rechaza.
 - T05: dos sesiones leen la misma versión; guarda la primera y la segunda recibe rechazo por conflicto. No deben perderse cambios.
 - T06: texto con caracteres SQL permanece como dato. Revisar que la llamada use parámetros y que la tabla se conserve. La prueba simulada comprueba el flujo; el ensayo real confirma el driver y paquete.
-- T07: RCONF_APP consulta MASKED_PERSONAL y obtiene etiqueta genérica y correo oculto; la lectura de DEMO_PERSONAL se deniega con ORA-00942 u ORA-01031.
-- T08: RCONF_APP consulta RISK_VIEW; lectura de RISKS y UPDATE directo se deniegan. No debe tener DBA ni privilegios ANY directos o heredados.
+- T07: RCONF_APP consulta MASKED_PERSONAL y obtiene etiqueta genérica y correo oculto; la lectura de DEMO_PERSONAL se deniega con ORA-00942 u ORA-01031. **Observado según salida aportada:** Persona 1, `[oculto]` y ORA-00942.
+- T08: RCONF_APP consulta RISK_VIEW; lectura de RISKS y UPDATE directo se deniegan. No debe tener DBA ni privilegios ANY directos o heredados. **Observado según salida aportada:** vista legible sin filas iniciales y ambas operaciones directas con ORA-00942.
 - T09: crear y actualizar riesgo mediante el paquete genera RISK_EVENTS. Error antes de commit no debe dejar riesgo actualizado sin evento; comprobar rollback en una transacción de prueba.
 - T10: RCONF_REVIEW consulta vistas y no ejecuta RISK_API. Revisar privilegios de rol y concesiones a PUBLIC.
-- T11: generar lecturas permitidas y denegadas; consultar UNIFIED_AUDIT_TRAIL como auditor autorizado. Validar política, objeto, cuenta y retorno. No basta con que CREATE AUDIT POLICY no muestre error.
+- T11: generar lecturas permitidas y denegadas; consultar UNIFIED_AUDIT_TRAIL como auditor autorizado. Validar política, objeto, cuenta y retorno. **Observado parcialmente:** política habilitada y eventos visibles. DEMO_PERSONAL aparece con códigos 2004 y 0; correlacionar las filas antes de cerrar el caso.
 - T12: confirmar HTTPS en Azure y canal híbrido. Detener el agente en un ensayo controlado y verificar error manejado; restaurar y comprobar recuperación.
 - T13: verificar TCPS SQL y validación del certificado sin deshabilitar ssl_server_dn_match. No confundir puerto HTTP 5500 con SQL TCPS.
 - T14: revisar exportaciones y ubicación de evidencias. Un enlace de evidencia debe apuntar a un recurso restringido, sin contenido sensible en el registro público.

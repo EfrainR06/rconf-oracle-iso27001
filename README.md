@@ -30,11 +30,12 @@ Los scripts son de primera instalación. No son idempotentes ni eliminan objetos
 ## Funciones
 
 - Registro y edición de riesgos, responsable, fecha, controles y tratamiento.
+- Caso ficticio Faro Servicios S.A. para explicar el escenario anterior hipotético, el estado observado en Oracle y las recomendaciones.
 - Matriz de exposición inherente; residual estimado separado.
 - PHVA con avance gradual y referencia de evidencia.
 - Aprobación residual por gestor; auditor de solo lectura.
-- 14 controles seleccionados y correspondencia parcial con 2013.
-- Bitácora transaccional Oracle, exportación JSON y fuentes enlazadas.
+- 14 controles seleccionados, correspondencia parcial con 2013 y comparación ampliada de requisitos, atributos y 11 controles nuevos.
+- Expediente preliminar T07, T08 y T11 basado en salidas SQL compartidas por el estudiante; bitácora transaccional Oracle, exportación JSON y fuentes enlazadas.
 - Consultas parametrizadas y cuenta sin DBA ni privilegios ANY.
 
 ## Documentos
@@ -45,8 +46,11 @@ Los scripts son de primera instalación. No son idempotentes ni eliminan objetos
 - [Declaración de IA y registro de contribuciones](docs/04_uso_ia.md).
 - [Plan de validación y plantilla de evidencia](docs/05_validacion.md).
 - [Fuentes y trazabilidad](docs/06_fuentes.md).
+- [Expediente preliminar de pruebas Oracle](docs/07_evidencia_oracle_2026-10-26.md).
+- [Guion para demostrar el sistema](docs/08_guion_demostracion.md).
 
-Los cuatro documentos principales se incluyen también como PDF. Los Markdown son editables y versionables. La norma completa no está incluida por estar sujeta a licencia. La matriz de aplicabilidad es parcial y el prototipo no acredita certificación ISO.
+El informe, los manuales de Oracle y Azure, la declaración de IA, el expediente de pruebas y el guion de presentación se incluyen también como PDF. Los Markdown son editables y versionables. La norma completa no está incluida por estar sujeta a licencia. La matriz de aplicabilidad es parcial y el prototipo no acredita certificación ISO.
+La sección **Documentación** de la web permite abrir directamente estos PDF. Después de actualizar el proyecto, reiniciar el servidor local para habilitar la ruta `/documents/`.
 
 ## Pruebas
 
@@ -56,6 +60,8 @@ Los cuatro documentos principales se incluyen también como PDF. Los Markdown so
 ```
 
 Las pruebas usan un almacén simulado para verificar las reglas de la API; no sustituyen las pruebas de integración con Oracle. Ver `docs/05_validacion.md` para alcance y evidencia.
+
+El estudiante compartió resultados de `05_verify_runtime.sql` y `04_verify_dba.sql` en XEPDB1 el 26 de octubre de 2026. La lectura de vistas y la denegación de tablas base fueron observadas en las salidas aportadas. La correlación de una fila de auditoría de DEMO_PERSONAL sigue pendiente; ver el expediente preliminar.
 
 ## Azure
 

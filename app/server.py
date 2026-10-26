@@ -2,6 +2,7 @@ import hmac
 import logging
 import os
 from functools import wraps
+from pathlib import Path
 from flask import Flask, jsonify, request, send_from_directory, g
 from dotenv import load_dotenv
 from .domain import validate
@@ -56,6 +57,17 @@ def create_app(store=None):
     @app.get('/')
     def index():
         return send_from_directory(app.static_folder, 'index.html')
+
+    @app.get('/documents/<string:name>')
+    def document(name):
+        published = {
+            '01_informe_academico.pdf', '02_manual_tecnico.pdf', '03_azure.pdf',
+            '04_uso_ia.pdf', '07_evidencia_oracle_2026-10-26.pdf',
+            '08_guion_demostracion.pdf',
+        }
+        if name not in published:
+            return jsonify(error='Documento no disponible.'), 404
+        return send_from_directory(Path(app.root_path).parent / 'docs', name)
 
     @app.get('/health')
     def health():

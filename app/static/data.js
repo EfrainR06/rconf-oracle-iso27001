@@ -33,9 +33,25 @@ const SOURCES=[
  ['ISO/IEC 27001:2013','Ficha histórica de la edición anterior','https://www.iso.org/standard/54534.html'],
  ['ISO/IEC 27002:2013','Ficha histórica de la edición anterior','https://www.iso.org/standard/54533.html'],
  ['ANAB · comparación 2013 y 2022','Cambios en requisitos y controles','https://blog.ansi.org/anab/iso-iec-27001-2013-2022-comparison/'],
+ ['ISO/IEC JTC 1/SC 27 · actualización 27002','Explicación de estructura, atributos y correspondencia por los editores de la norma','https://committee.iso.org/files/live/sites/jtc1sc27/files/resources/ISO-IEC%20JTC%201-SC%2027_N22755_SC27%20Journal%20Vol%202%20Issue%202%20(update%20Dec%202022).pdf'],
  ['Oracle · autorización','Privilegios, roles y permisos de objetos','https://docs.oracle.com/en/database/oracle/oracle-database/19/dbseg/configuring-privilege-and-role-authorization.html'],
  ['Oracle · auditoría unificada','Sintaxis de políticas de auditoría','https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/CREATE-AUDIT-POLICY-Unified-Auditing.html'],
  ['Azure · App Service con Python','Alojamiento de la aplicación','https://learn.microsoft.com/en-us/azure/app-service/quickstart-python'],
  ['Azure · Hybrid Connections','Conexión de App Service a Oracle local','https://learn.microsoft.com/en-us/azure/app-service/app-service-hybrid-connections'],
  ['GlobalSuite · ISO 27002','Lectura complementaria aportada por el estudiante','https://www.globalsuitesolutions.com/es/que-es-la-norma-iso-27002-y-para-que-sirve/']
+];
+
+// Resultados transcritos de salidas SQL compartidas por el estudiante el 26-10-2026.
+// No equivalen a una revisión independiente ni a una certificación.
+const CASE_TESTS=[
+ {id:'T07',title:'Vista limitada frente a tabla sensible',controls:'8.3 · 8.11',expected:'MASKED_PERSONAL legible; DEMO_PERSONAL inaccesible.',observed:'RCONF_APP obtuvo Persona 1 con correo [oculto]; SELECT sobre DEMO_PERSONAL devolvió ORA-00942.',status:'Conforme según salida aportada',tone:'pass',proof:'05_verify_runtime.sql · 26 oct 2026',phase:'Verificar'},
+ {id:'T08',title:'Acceso mínimo al registro de riesgos',controls:'5.18 · 8.2 · 8.3',expected:'RISK_VIEW legible; RISKS y UPDATE directo denegados.',observed:'RISK_VIEW respondió sin filas en la primera prueba; SELECT y UPDATE sobre RISKS devolvieron ORA-00942.',status:'Conforme según salida aportada',tone:'pass',proof:'05_verify_runtime.sql · 26 oct 2026',phase:'Verificar'},
+ {id:'T11',title:'Política y rastro de auditoría',controls:'8.15 · 8.16',expected:'Política habilitada y eventos de acciones permitidas y denegadas.',observed:'RCONF_ACCESS_POLICY figuró activa para RCONF_APP y RCONF_REVIEW. El rastro incluyó códigos 0 y 2004 para DEMO_PERSONAL; falta correlacionar el evento con código 0.',status:'Revisión pendiente',tone:'review',proof:'04_verify_dba.sql · 26 oct 2026',phase:'Verificar'}
+];
+
+const AUDIT_NEXT=[
+ {priority:'Alta',title:'Correlacionar auditoría',detail:'Relacionar cada evento de UNIFIED_AUDIT_TRAIL con hora, sesión, sentencia y código de retorno; aclarar la fila de DEMO_PERSONAL con código 0.'},
+ {priority:'Alta',title:'Cerrar cuenta instaladora',detail:'Ejecutar 06_lock_owner.sql después de terminar las pruebas y comprobar que la aplicación conserva sus funciones.'},
+ {priority:'Media',title:'Completar evidencia PHVA',detail:'Conservar salida original, fecha, ejecutor, PDB, resultado esperado y observado para cada EV; revisar la referencia antes de aprobar el residual.'},
+ {priority:'Futura',title:'Identidad y canal de Azure',detail:'Planificar identidad individual, MFA, secretos gestionados y conectividad cifrada antes de usar datos reales o publicar el modo Oracle.'}
 ];
