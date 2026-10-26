@@ -18,7 +18,7 @@ CREATE USER rconf_review IDENTIFIED BY "&audit_pwd";
 UNDEFINE owner_pwd app_pwd audit_pwd
 CREATE ROLE rconf_runtime;
 CREATE ROLE rconf_readonly;
-GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW, CREATE PROCEDURE TO rconf_owner;
+GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW, CREATE PROCEDURE, CREATE SEQUENCE TO rconf_owner;
 GRANT CREATE SESSION TO rconf_app, rconf_review;
 GRANT rconf_runtime TO rconf_app;
 GRANT rconf_readonly TO rconf_review;

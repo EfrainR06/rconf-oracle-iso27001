@@ -52,7 +52,7 @@ El acceso administrativo debe estar autorizado. No incluir contraseñas en URLs,
 
 ## Objetos y modelo de mínimo privilegio
 
-RCONF_OWNER contiene RISKS, RISK_EVENTS, vistas, paquete y datos sintéticos de prueba. Su capacidad de crear objetos se utiliza durante instalación y se revoca al finalizar. No se usa como cuenta de ejecución web.
+RCONF_OWNER contiene RISKS, RISK_EVENTS, vistas, paquete y datos sintéticos de prueba. Su capacidad de crear objetos se utiliza durante instalación y se revoca al finalizar. El permiso temporal CREATE SEQUENCE es necesario porque las tablas usan columnas identity. No se usa como cuenta de ejecución web.
 
 RCONF_APP recibe CREATE SESSION y el rol RCONF_RUNTIME. El rol permite SELECT sobre RISK_VIEW, EVENT_VIEW y MASKED_PERSONAL y EXECUTE sobre RISK_API. No recibe permisos sobre las tablas base, privilegios ANY, DBA, AUDIT_ADMIN ni concesiones administrativas.
 
