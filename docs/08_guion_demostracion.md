@@ -4,9 +4,9 @@
 
 ## Preparación antes de presentar
 
-1. Abrir `http://127.0.0.1:8000/#overview` y confirmar que el encabezado indique **Oracle**, no modo demostración. Si el servidor está apagado, iniciarlo desde la carpeta del proyecto con `./start-local.ps1` en PowerShell. Si aparece «sin sesión», usar **Conectar sesión** con el token del rol pertinente; no mostrarlo ni decirlo en voz alta.
+1. Para la versión actual de esta sesión, abrir `http://127.0.0.1:8001/#overview` y confirmar que el encabezado indique **Oracle**, no modo demostración. El iniciador habitual `start-local.ps1` usa el puerto 8000 cuando esté libre. Si aparece «sin sesión», usar **Conectar sesión** con el token del rol pertinente; no mostrarlo ni decirlo en voz alta. Si `/api/config` no indica `oracle`, revisar la configuración local y reiniciar el servidor sin proyectar `.env`.
 2. Tener abierto el riesgo registrado y su referencia **EV-001**. Verificar antes de exponer que la referencia describe una prueba real y apunta al archivo o acta original. Si la sesión actual no muestra el riesgo, no presentar el contador vacío como si la base estuviera vacía: conectarse o explicar la limitación. Revisar en PHVA la recomendación y los controles seleccionados; son propuestas que requieren criterio del responsable.
-3. Preparar por separado las salidas originales de `05_verify_runtime.sql` y `04_verify_dba.sql`, el PDF `07_evidencia_oracle_2026-10-26.pdf` y el PDF `04_uso_ia.pdf`. Probar antes el botón **Ejecutar comprobación** en la página PHVA y descargar su JSON. Ocultar contraseñas, tokens, cadenas de conexión sensibles y cualquier dato personal.
+3. Preparar por separado las salidas SQL*Plus de `05_verify_runtime.sql` y `04_verify_dba.sql`, el PDF `07_evidencia_oracle_2026-10-26.pdf` y el PDF `04_uso_ia.pdf`. Si no hay archivos guardados, repetir las consultas y usar `SPOOL` según los pasos de este guion; una nueva ejecución debe rotularse con su propia fecha, no presentarse como una salida antigua. Probar antes el botón **Ejecutar comprobación** y descargar su JSON. Ocultar contraseñas, tokens y cualquier dato personal.
 4. Comprobar que los datos de ejemplo son sintéticos. No ejecutar de nuevo scripts de instalación (`01_accounts.sql` y `02_schema.sql`) para la presentación: son de primera instalación. Para repetir pruebas, usar únicamente scripts de verificación con la cuenta indicada.
 
 ## 1. Apertura y problema (45 segundos)
@@ -27,7 +27,9 @@
 
 ## 5. Auditoría y hallazgo abierto (75 segundos)
 
-**Pantalla:** Expediente de evidencias, T11. Mostrar en `04_verify_dba.sql` la política `RCONF_ACCESS_POLICY` habilitada y las filas relevantes del rastro. **Decir:** «La política está activa, pero una fila de `DEMO_PERSONAL` tiene código 0 y otra 2004. La prueba negativa en SQL*Plus devolvió ORA-00942. Debo correlacionar hora, sesión y sentencia antes de cerrar T11». No equiparar automáticamente 2004 con ORA-00942 y no ocultar la fila de código 0. Un auditor debe poder reproducir la conclusión.
+**Qué significa T11:** es la verificación de auditoría. Comprueba que `RCONF_ACCESS_POLICY` aparece habilitada y revisa en `UNIFIED_AUDIT_TRAIL` los accesos de `RCONF_APP` y `RCONF_REVIEW`. En la salida compartida aparecieron dos filas para `DEMO_PERSONAL`, una con código 0 y otra con 2004; el ensayo de SQL*Plus para leer la tabla fue denegado con `ORA-00942`. Esas observaciones deben correlacionarse por hora, usuario, acción y objeto. No se debe afirmar que 2004 equivale a `ORA-00942` ni que la fila con código 0 sea necesariamente la lectura directa: podría pertenecer a otra sentencia o sesión.
+
+**Pantalla:** Expediente de evidencias, T11; después, el archivo de salida generado por SQL*Plus. Mostrar la política habilitada, las dos filas de `DEMO_PERSONAL` y la denegación `ORA-00942` en la prueba de runtime. **Decir:** «La política está activa, pero la correspondencia entre el evento y el ensayo aún no está probada. T11 sigue abierto hasta relacionar sentencia, hora y sesión». Dejar visibles ambas filas y la consulta que las produjo.
 
 ## 6. Comparación ISO 2013 y 2022 (90 segundos)
 
@@ -40,16 +42,16 @@
 ## Si el docente pide una prueba en vivo
 
 - **Ver el riesgo guardado:** conectarse en la web con un rol autorizado, abrir Registro de riesgos y buscar el identificador. Mostrar EV-001 y su archivo fuente. No crear datos ficticios como evidencia de producción.
-- **Repetir la prueba de mínimo privilegio:** abrir SQL*Plus, conectar `RCONF_APP` a `localhost:1521/XEPDB1` sin exponer la contraseña y ejecutar `@C:\Users\Usuario\Documents\Codex\2026-10-25\q\outputs\rconf-oracle\sql\05_verify_runtime.sql`. Antes de interpretar, confirmar `RCONF_APP` y `XEPDB1` en la salida. Es esperable ver `ORA-00942` en las pruebas negativas; cualquier éxito inesperado invalida el control.
-- **Revisar auditoría:** en otra sesión DBA de XEPDB1 ejecutar `@C:\Users\Usuario\Documents\Codex\2026-10-25\q\outputs\rconf-oracle\sql\04_verify_dba.sql`. Conservar la salida con hora y cuenta, y explicar T11 como pendiente hasta correlacionar eventos.
-- **Si falla la conexión web:** comprobar `/api/config`, que debe indicar `oracle`, confirmar servidor y `.env` local, y reiniciar el servidor tras cambiar configuración. Nunca proyectar el contenido de `.env`.
+- **Guardar la salida original de runtime:** en PowerShell, ir a la carpeta del proyecto, ejecutar `New-Item -ItemType Directory -Force local-evidence` y abrir `sqlplus /nolog`. En SQL*Plus escribir `CONNECT RCONF_APP@localhost:1521/XEPDB1`; al pedirla, introducir la contraseña. Después ejecutar `SPOOL local-evidence\05_verify_runtime_2026-10-26.txt`, `@sql/05_verify_runtime.sql` y `SPOOL OFF`.
+- **Guardar la salida original DBA:** abrir otra sesión `sqlplus /nolog` y escribir `CONNECT sys@localhost:1521/XEPDB1 AS SYSDBA`; introducir la contraseña solo cuando SQL*Plus la solicite. Ejecutar `SPOOL local-evidence\04_verify_dba_2026-10-26.txt`, `@sql/04_verify_dba.sql` y `SPOOL OFF`. La sesión DBA verifica política, privilegios y rastro.
+- **Enseñarlas en el video:** abrir los dos `.txt` desde `local-evidence` con Bloc de notas o VS Code. En runtime señalar primero `ACCOUNT` y `PDB`, luego la vista enmascarada permitida y las denegaciones `ORA-00942`; la salida incluye también el intento de UPDATE seguido por rollback. En DBA señalar `RCONF_ACCESS_POLICY`, la consulta a `UNIFIED_AUDIT_TRAIL` y las filas de `DEMO_PERSONAL` con códigos 0 y 2004. Mostrar fecha y nombre del archivo, no contraseñas. La salida anterior compartida en el chat no se convierte retroactivamente en un archivo original: si no la guardaste, la nueva captura `SPOOL` es una ejecución nueva.
 
 ## Lista para tener el video listo
 
 1. Reiniciar el servidor local tras actualizar el proyecto; comprobar que `/api/config` indica `oracle` y que la página reconoce la sesión. Un navegador recién abierto necesita reconectar el token.
 2. Verificar que el riesgo real aparece en el registro y en PHVA. Filtrar los controles por ese riesgo; preparar una explicación propia del tratamiento y del residual.
 3. Ejecutar ante cámara la comprobación local de cuatro SELECT. Mostrar el resultado completo y descargar el JSON sin exponer el token. Si aparece fallo o revisar, investigar y explicarlo; no editar la salida para que parezca conforme.
-4. Tener a mano el archivo original de `05_verify_runtime.sql` para enseñar el UPDATE denegado y el de `04_verify_dba.sql` para T11. Conservar fecha, cuenta, PDB, ejecutor y revisor. T11 sigue abierto hasta correlacionar la fila con código 0.
+4. Tener a mano los dos archivos `.txt` creados con `SPOOL`. Confirmar fecha, cuenta, PDB, ejecutor y revisor. T11 sigue abierto hasta correlacionar sentencia, sesión, hora y código de retorno.
 5. Abrir la declaración de IA y el informe académico en PDF. Confirmar con el docente la condición de uso evaluativo de IA indicada en el programa antes de entregar. El estudiante debe revisar y poder explicar el código, la configuración y cada resultado mostrado.
 6. Hacer una grabación de prueba de 8 a 10 minutos. Revisar que se lean la PDB, el riesgo, los cuatro estados y las fuentes ISO, que el audio sea inteligible y que no aparezcan contraseñas, tokens ni el contenido de `.env`. Conservar el video y las salidas originales en una ubicación restringida.
 
