@@ -6,6 +6,8 @@ Se ejecutaron 12 pruebas automatizadas de API y dominio con pytest. Resultado in
 
 El estudiante compartió salidas de `05_verify_runtime.sql` y `04_verify_dba.sql` ejecutadas en XEPDB1 el 26 de octubre de 2026. T07 y T08 muestran resultados esperados; T11 requiere correlación adicional de una fila de auditoría. Su transcripción y límites figuran en `07_evidencia_oracle_2026-10-26.md`. TCPS, conectividad desde Azure, recuperación y respaldo siguen sin evidencias de ejecución. Para cada ensayo se necesita fecha real, cuenta usada, contenedor, pasos, esperado, observado, conclusión y referencia del archivo original.
 
+El 26 de octubre de 2026 Codex ejecutó en el Oracle local cuatro consultas SELECT predefinidas desde RCONF_APP: vista enmascarada permitida, tabla personal denegada, vista de riesgos permitida y tabla RISKS denegada. Las cuatro devolvieron el resultado esperado; la salida estructurada y su procedencia están en `09_comprobacion_local_2026-10-26.json`. Esta comprobación no ejecutó UPDATE ni consultó el rastro DBA. El estudiante debe revisar y repetir la prueba ante cámara si desea presentarla como trabajo propio observado.
+
 ## Casos de aceptación
 
 - T01: sin token, GET /api/risks debe devolver 401 en modo Oracle. Ningún dato debe aparecer.

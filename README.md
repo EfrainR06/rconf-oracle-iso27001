@@ -33,8 +33,10 @@ Los scripts son de primera instalación. No son idempotentes ni eliminan objetos
 - Caso ficticio Faro Servicios S.A. para explicar el escenario anterior hipotético, el estado observado en Oracle y las recomendaciones.
 - Matriz de exposición inherente; residual estimado separado.
 - PHVA con avance gradual y referencia de evidencia.
+- Recomendaciones por riesgo en cada fase PHVA, basadas en la exposición, los controles elegidos y el residual estimado.
 - Aprobación residual por gestor; auditor de solo lectura.
-- 14 controles seleccionados, correspondencia parcial con 2013 y comparación ampliada de requisitos, atributos y 11 controles nuevos.
+- Catálogo visual de 14 controles filtrable por categoría y riesgo registrado, con aplicación propuesta, equivalencia 2013 y evidencia esperada.
+- Comprobación local guiada de cuatro accesos de RCONF_APP desde la web, sin SQL arbitrario ni privilegios administrativos; resultado descargable en JSON.
 - Expediente preliminar T07, T08 y T11 basado en salidas SQL compartidas por el estudiante; bitácora transaccional Oracle, exportación JSON y fuentes enlazadas.
 - Consultas parametrizadas y cuenta sin DBA ni privilegios ANY.
 
@@ -48,6 +50,7 @@ Los scripts son de primera instalación. No son idempotentes ni eliminan objetos
 - [Fuentes y trazabilidad](docs/06_fuentes.md).
 - [Expediente preliminar de pruebas Oracle](docs/07_evidencia_oracle_2026-10-26.md).
 - [Guion para demostrar el sistema](docs/08_guion_demostracion.md).
+- [Resultado de la comprobación local de solo lectura](docs/09_comprobacion_local_2026-10-26.json).
 
 El informe, los manuales de Oracle y Azure, la declaración de IA, el expediente de pruebas y el guion de presentación se incluyen también como PDF. Los Markdown son editables y versionables. La norma completa no está incluida por estar sujeta a licencia. La matriz de aplicabilidad es parcial y el prototipo no acredita certificación ISO.
 La sección **Documentación** de la web permite abrir directamente estos PDF. Después de actualizar el proyecto, reiniciar el servidor local para habilitar la ruta `/documents/`.

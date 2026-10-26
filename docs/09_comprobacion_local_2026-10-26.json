@@ -1,0 +1,37 @@
+{
+  "account": "RCONF_APP",
+  "pdb": "XEPDB1",
+  "checked_at": "2026-10-26T07:52:40.559050+00:00",
+  "results": [
+    {
+      "id": "T07-VISTA",
+      "title": "Vista limitada",
+      "expected": "masked",
+      "status": "conforme",
+      "observed": "La vista devolvió el valor enmascarado esperado."
+    },
+    {
+      "id": "T07-TABLA",
+      "title": "Tabla personal directa",
+      "expected": "denied",
+      "status": "conforme",
+      "observed": "Acceso denegado por Oracle (ORA-00942)."
+    },
+    {
+      "id": "T08-VISTA",
+      "title": "Vista de riesgos",
+      "expected": "allowed",
+      "status": "conforme",
+      "observed": "La vista fue accesible."
+    },
+    {
+      "id": "T08-TABLA",
+      "title": "Tabla de riesgos directa",
+      "expected": "denied",
+      "status": "conforme",
+      "observed": "Acceso denegado por Oracle (ORA-00942)."
+    }
+  ],
+  "provenance": "Comprobación de solo lectura ejecutada por Codex en Oracle local del estudiante; requiere revisión del estudiante para presentación",
+  "scope": "Cuatro consultas SELECT predefinidas; no cubre UPDATE ni auditoría DBA"
+}

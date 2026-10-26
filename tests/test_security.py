@@ -15,6 +15,7 @@ class FakeStore:
  def list(self): return copy.deepcopy(self.rows)
  def events(self): return []
  def save(self,data,id,version,role): self.calls.append((data,id,version,role)); return id or 2
+ def check_runtime(self,role): self.calls.append(('check',role)); return dict(account='RCONF_APP',pdb='XEPDB1',results=[])
 
 @pytest.fixture
 def oracle(monkeypatch,record):
@@ -29,7 +30,19 @@ def test_no_auth_no_data(oracle):
  client,store=oracle
  assert client.get('/api/risks').status_code==401
  assert client.get('/api/events').status_code==401
+ assert client.post('/api/checks/runtime').status_code==401
  assert not store.calls
+
+def test_local_checks_are_fixed_and_local_only(oracle,monkeypatch):
+ client,store=oracle
+ assert client.post('/api/checks/runtime',headers=auth('auditor'),environ_base={'REMOTE_ADDR':'203.0.113.8'}).status_code==403
+ assert not store.calls
+ response=client.post('/api/checks/runtime',headers=auth('auditor'),json={'sql':'DROP TABLE risks'})
+ assert response.status_code==200
+ assert response.json['account']=='RCONF_APP'
+ assert store.calls==[('check','auditor')]
+ monkeypatch.setenv('WEBSITE_HOSTNAME','example.azurewebsites.net')
+ assert client.post('/api/checks/runtime',headers=auth('auditor')).status_code==403
 
 def test_auditor_cannot_write(oracle,record):
  client,store=oracle

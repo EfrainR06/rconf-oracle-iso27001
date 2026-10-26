@@ -92,6 +92,13 @@ def create_app(store=None):
     def events():
         return jsonify(store.events())
 
+    @app.post('/api/checks/runtime')
+    @auth()
+    def check_runtime():
+        if request.remote_addr not in ('127.0.0.1', '::1') or os.getenv('WEBSITE_HOSTNAME'):
+            return jsonify(error='Las comprobaciones solo están disponibles en el servidor local.'), 403
+        return jsonify(store.check_runtime(g.role))
+
     @app.route('/api/risks', methods=['POST'])
     @app.route('/api/risks/<int:risk_id>', methods=['PUT'])
     @auth(write=True)

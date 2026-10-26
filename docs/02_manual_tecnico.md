@@ -1,6 +1,6 @@
 # Instalación y operación del laboratorio Oracle
 
-Efrain Retana Segura. EIF402 Administración de Bases de Datos. Universidad Nacional. II Ciclo 2026. Versión del manual: 25 de octubre de 2026.
+Efrain Retana Segura. EIF402 Administración de Bases de Datos. Universidad Nacional. II Ciclo 2026. Versión del manual: 26 de octubre de 2026.
 
 ## Arquitectura de la solución
 
@@ -10,7 +10,7 @@ La API usa un pool de hasta cuatro conexiones, llamadas con límite de tiempo, c
 
 ## Requisitos y comprobaciones previas
 
-Se necesita Python 3.12, PowerShell, Oracle Database 21c XE operativo, SQL*Plus o SQL Developer, una PDB de laboratorio en modo READ WRITE y acceso de un DBA autorizado para la instalación. El usuario indicó la versión 21. El listener local fue consultado y anuncia el servicio `xepdb1` y el puerto TCP 1521. Esto verifica el anuncio de servicio; no prueba la conexión de RCONF_APP ni la disponibilidad futura.
+Se necesita Python 3.11 o 3.12, PowerShell, Oracle Database 21c XE operativo, SQL*Plus o SQL Developer, una PDB de laboratorio en modo READ WRITE y acceso de un DBA autorizado para la instalación. El usuario indicó la versión 21. El listener local fue consultado y anuncia el servicio `xepdb1` y el puerto TCP 1521. La conexión de RCONF_APP a XEPDB1 se confirmó después mediante pruebas locales; la disponibilidad futura debe comprobarse de nuevo.
 
 La opción TCPS del listener en el puerto 5500 corresponde al servicio de administración HTTP observado. No debe confundirse con un listener SQL TCPS para el driver de esta aplicación. La protección TCPS para SQL requiere configuración independiente y validación del certificado.
 
@@ -88,11 +88,21 @@ El analista crea registros en Planificar y estado Abierto. Registra activo, resp
 
 El auditor consulta riesgos y eventos. El gestor puede crear y editar, además de registrar la decisión residual en Actuar con evidencia y justificación. Para Mitigado el producto residual debe ser como máximo 4. Una aceptación superior requiere justificación explícita; no se confunde con un control eficaz.
 
+La vista PHVA ofrece una recomendación por riesgo y muestra el tratamiento registrado, los controles seleccionados, la evidencia esperada y el residual estimado. Estas sugerencias ayudan a preparar el siguiente paso; el responsable revisa la pertinencia de cada medida y el auditor contrasta los resultados con los archivos originales. La vista Controles permite filtrar por categoría y por riesgo del registro.
+
 Al guardar se envía la versión leída. Si otra sesión modificó el registro, el servidor rechaza el cambio y solicita actualizar. El paquete bloquea el registro y comprueba nuevamente la versión antes de actualizar, para evitar perder cambios concurrentes. El riesgo y su evento se confirman juntos; no hay un endpoint de borrado de bitácora.
+
+## Comprobación guiada desde la aplicación local
+
+Con APP_MODE=oracle y una sesión web conectada, abrir **Ciclo PHVA → Ejecutar pruebas de acceso mínimo**. El servidor utiliza exclusivamente la cuenta técnica RCONF_APP configurada en `.env`; el navegador no recibe ni envía su contraseña. La comprobación consta de cuatro consultas SELECT fijas: lectura de la vista MASKED_PERSONAL y verificación del valor `[oculto]`, denegación de la tabla DEMO_PERSONAL, lectura de RISK_VIEW y denegación de la tabla RISKS. Los intentos de tabla base usan `WHERE 1=0`, de modo que prueban el permiso sin extraer filas. Ningún SQL escrito por el usuario llega a este endpoint.
+
+El resultado muestra conforme, fallo o revisar por prueba, cuenta, PDB y hora UTC. El botón **Descargar resultado JSON** conserva una copia técnica; antes de usarla como evidencia debe agregarse ejecutor, revisor, contexto, versión del proyecto y archivo original de la prueba. Una prueba permitida sobre la tabla base marca fallo. Un error distinto de ORA-00942 u ORA-01031 requiere investigación.
+
+La ruta POST `/api/checks/runtime` requiere token, conexión desde el propio equipo y ausencia de WEBSITE_HOSTNAME; queda inhabilitada en Azure. No concede privilegios y no ejecuta DDL, UPDATE ni consultas DBA. Para la prueba negativa de UPDATE usar `sql/05_verify_runtime.sql` con RCONF_APP en SQL*Plus; para correlacionar la política y el rastro unificado usar `sql/04_verify_dba.sql` con DBA. No repetir los scripts 01–03 en una instalación existente. La comprobación local de cuatro SELECT ejecutada el 26 de octubre de 2026 quedó en `docs/09_comprobacion_local_2026-10-26.json`, con procedencia y límites explícitos.
 
 ## Superficie de API y restricciones
 
-GET /health indica que el proceso responde y comunica el modo; no comprueba Oracle. GET /api/config publica solo el modo. GET /api/session identifica el rol del token. GET /api/risks y GET /api/events requieren credencial en modo Oracle. POST /api/risks y PUT /api/risks/id requieren rol con escritura.
+GET /health indica que el proceso responde y comunica el modo; no comprueba Oracle. GET /api/config publica solo el modo. GET /api/session identifica el rol del token. GET /api/risks y GET /api/events requieren credencial en modo Oracle. POST /api/risks y PUT /api/risks/id requieren rol con escritura. POST /api/checks/runtime ejecuta únicamente las cuatro comprobaciones locales predefinidas; cualquier rol autenticado puede observarlas, sin permiso para ejecutar SQL arbitrario.
 
 Se limita la carga a 16 KiB, se valida el tipo JSON y los campos tienen longitud máxima. Las respuestas de error ocultan SQL, contraseñas y detalles internos. Se usa una política CSP restringida al propio origen, no hay CORS abierto y los tokens se envían en Authorization. Deben revisarse el navegador y su entorno contra extensiones maliciosas y XSS; el escape de contenido es necesario pero no reemplaza las revisiones de seguridad.
 
@@ -110,4 +120,4 @@ Para volver a demostración cambiar APP_MODE=demo y reiniciar; se conservan los 
 
 No se incluye un DROP USER CASCADE automático. La eliminación exige revisar dependencias y retención de evidencias con el DBA. Para mantenimiento, el DBA desbloquea temporalmente al propietario y concede únicamente los privilegios DDL necesarios; al terminar los revoca y vuelve a bloquear. Registrar el motivo y comparar permisos antes y después.
 
-Fuentes técnicas: S8 a S12 en `06_fuentes.md`. La instalación y las pruebas Oracle permanecen pendientes de ejecución por el estudiante; la respuesta del listener no constituye una prueba de integración completa.
+Fuentes técnicas: S8 a S12 en `06_fuentes.md`. El estudiante compartió las salidas de instalación y de `05_verify_runtime.sql` y `04_verify_dba.sql`; T11 requiere correlación. La comprobación local adicional de cuatro SELECT fue ejecutada por Codex en el entorno del estudiante y debe revisarse antes de incluirla en la presentación. TCPS y Azure siguen sin prueba de integración.

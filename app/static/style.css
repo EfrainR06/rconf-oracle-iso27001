@@ -116,3 +116,103 @@ tbody tr:hover{background:#f8fbfb}
 @media(max-width:520px){.assurance-grid,.new-controls{grid-template-columns:1fr}.engagement-brief h2,.case-lead h2{font-size:25px}.brief-facts{grid-template-columns:1fr 1fr}.evidence-summary>div{padding:13px}.evidence-summary strong{font-size:26px}.comparison-hero .comparison-big strong{font-size:40px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
 @media print{.engagement-brief,.case-lead,.comparison-hero{color:var(--ink);background:white;border:1px solid var(--line)}.engagement-brief p,.case-lead p,.comparison-hero p,.comparison-notes strong,.engagement-brief h2,.case-lead h2{color:var(--ink)}.assurance-card,.evidence-summary{break-inside:avoid}.source-strip{display:none}}
+
+/* PHVA: recomendaciones ligadas al riesgo y ejecución local acotada. */
+.kanban-col{min-width:0}
+.kanban-empty{border:1px dashed #bfd0d6;border-radius:6px;padding:18px 10px;margin-top:13px;color:var(--muted);font-size:11px;text-align:center}
+.risk-card{padding:17px;box-shadow:0 9px 24px #1438470a}
+.risk-card-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.risk-card-head .badge{white-space:normal;text-align:right}
+.risk-card h3{font-size:14px;line-height:1.32;margin:12px 0 4px}
+.risk-card-asset{color:var(--muted);font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+.risk-card-plan,.risk-card-advice{border-top:1px solid var(--line);padding-top:11px;margin-top:12px}
+.risk-card-plan span,.risk-card-advice span{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#52717b}
+.risk-card-plan p,.risk-card-advice p{font-size:11px;color:var(--ink);margin:6px 0 0;line-height:1.55;overflow-wrap:anywhere}
+.risk-card-advice{background:#eaf5f4;border:1px solid #cce5e1;border-left:3px solid var(--teal);padding:12px;border-radius:4px}
+.risk-card-advice span{color:#0d6f70}
+.risk-card-advice small{display:block;color:#4f6c73;font-size:10px;line-height:1.5;margin-top:8px}
+.risk-card-footer{display:grid;gap:7px;margin:12px 0;color:var(--muted);font-size:10px;overflow-wrap:anywhere}
+.risk-card-footer .badge{margin-left:3px}
+.risk-card-details{border-top:1px solid var(--line);padding:10px 0;margin-bottom:12px;font-size:10px}
+.risk-card-details summary{font-weight:650}
+.risk-card-details>div{border-left:2px solid #cce5e1;padding:7px 0 7px 10px;margin-top:8px}
+.risk-card-details p{margin:5px 0;font-size:10px}
+.risk-card-details small{color:var(--muted);font-size:10px}
+.local-checks .panel-heading{align-items:center}
+.local-checks .panel-heading h2{margin-top:6px}
+.local-checks .panel-heading small{display:block;max-width:65ch}
+.check-result-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding:16px 0}
+.check-result-head span{color:var(--muted);font-size:11px}
+.check-result-head button{margin-left:auto}
+.check-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:15px}
+.check-result{border:1px solid var(--line);border-radius:6px;padding:13px;background:#f8fafb}
+.check-result span{font:10px Consolas,monospace;color:var(--teal)}
+.check-result strong{display:block;font-size:12px;margin:4px 0}
+.check-result em{font-size:10px;font-style:normal;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.check-result p{font-size:11px;margin:5px 0 0}
+.check-result.conforme{border-top:3px solid var(--green)}
+.check-result.fallo{border-top:3px solid var(--red)}
+.check-result.revisar{border-top:3px solid #b67b20}
+.command-guide{border-top:1px solid var(--line);margin-top:16px;padding-top:14px}
+.command-guide summary{font-size:12px;font-weight:650}
+.command-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.command-grid>div{min-width:0}
+.command-grid strong{font-size:12px}
+.command-grid p{font-size:11px;margin:4px 0 0}
+.command-grid pre{font-size:10px;line-height:1.7;margin:10px 0;overflow-wrap:anywhere}
+
+/* Catálogo de controles con decisiones y evidencias visibles. */
+.control-intro{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(310px,.8fr);gap:30px;background:#173f4d;color:#fff;border-radius:8px;padding:30px 34px}
+.control-intro .section-tag{color:#83d8d1}
+.control-intro h2{font:600 30px/1.1 'Bahnschrift','Segoe UI',sans-serif;letter-spacing:-.03em;margin:10px 0 13px}
+.control-intro p{color:#c7dcdf;font-size:13px;max-width:62ch}
+.control-intro a{color:#8ee2d9;font-size:12px;font-weight:650;text-decoration:none}
+.control-intro-stats{display:grid;grid-template-columns:repeat(3,1fr);align-items:center;border-left:1px solid #5d8790;padding-left:24px;gap:14px}
+.control-intro-stats div{display:grid;gap:4px}
+.control-intro-stats strong{font:600 30px/1 'Bahnschrift','Segoe UI',sans-serif;color:#86ddd4}
+.control-intro-stats span{font-size:10px;line-height:1.3;color:#c8dfe2}
+.control-catalog{margin-top:22px}
+.catalog-heading{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:16px}
+.catalog-heading p{font-size:11px;margin:0}
+.control-toolbar{display:grid;grid-template-columns:minmax(220px,1.4fr) minmax(160px,.6fr) minmax(220px,1fr);gap:10px;margin-bottom:17px}
+.control-toolbar input,.control-toolbar select{width:100%;min-width:0;border:1px solid var(--line);background:white;color:var(--ink);border-radius:5px;padding:11px 12px;font-size:12px}
+.iso-control{position:relative;overflow:hidden;padding:23px;box-shadow:0 8px 26px #173f4d0a}
+.iso-control:before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--teal)}
+.iso-control-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.control-number{font:600 25px/1 'Bahnschrift','Segoe UI',sans-serif;color:var(--teal)}
+.control-kind{font-size:10px;color:#48717a;background:#e9f3f4;border-radius:3px;padding:4px 7px}
+.iso-control h3{font:600 18px/1.3 'Bahnschrift','Segoe UI',sans-serif;margin:13px 0 16px}
+.control-block{border-top:1px solid var(--line);padding:11px 0 0;margin-top:10px}
+.control-block span,.control-mapping span,.control-links span{display:block;color:#617c84;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.control-block p{font-size:12px;color:var(--ink);margin:5px 0 0}
+.evidence-block{background:#f2f7f7;padding:11px;border-radius:4px;border:0;margin-top:15px}
+.control-mapping,.control-links{margin-top:14px;border-top:1px solid var(--line);padding-top:11px}
+.control-mapping strong{display:block;font-size:11px;margin-top:4px;overflow-wrap:anywhere}
+.control-links p{display:flex;gap:6px;flex-wrap:wrap;font-size:11px;margin:7px 0 0}
+.control-links .inline-button{background:#edf5f5;border-radius:3px;padding:4px 6px}
+.control-review-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:16px}
+.control-review-steps>div{border-left:2px solid #83d4cf;padding-left:14px}
+.control-review-steps b{display:block;color:var(--teal);font:600 22px 'Bahnschrift','Segoe UI',sans-serif}
+.control-review-steps strong{font-size:13px}
+.control-review-steps p{font-size:11px;margin:5px 0 0}
+@media(max-width:1200px){.control-intro{grid-template-columns:1fr}.control-intro-stats{border-left:0;border-top:1px solid #5d8790;padding:16px 0 0}.control-toolbar{grid-template-columns:1fr 1fr}.control-toolbar input{grid-column:1/-1}.check-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.control-intro{padding:24px}.control-intro-stats{grid-template-columns:repeat(3,1fr)}.control-toolbar,.command-grid,.control-review-steps{grid-template-columns:1fr}.control-toolbar input{grid-column:auto}.catalog-heading{align-items:start;flex-direction:column}.check-grid{grid-template-columns:1fr}}
+@media print{.risk-card,.iso-control,.check-result{break-inside:avoid}.command-guide{display:none}}
+
+/* Caso de estudio: modelo causal y recorrido de auditoría. */
+.case-threat-grid,.case-route,.case-demo-links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:15px}
+.case-threat-grid>div{background:#f1f6f7;border:1px solid #e0eaed;border-radius:5px;padding:17px}
+.case-threat-grid span{font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--teal)}
+.case-threat-grid strong{display:block;font-size:13px;margin:7px 0}
+.case-threat-grid p{font-size:11px;margin:0}
+.case-route{position:relative}
+.case-route>div{border-left:2px solid #83d4cf;padding:4px 12px}
+.case-route b{display:block;font:600 23px 'Bahnschrift','Segoe UI',sans-serif;color:var(--teal)}
+.case-route strong{font-size:13px}
+.case-route p{font-size:11px;margin:5px 0 0}
+.case-demo-links a{display:grid;gap:6px;align-content:start;text-decoration:none;background:#eef5f5;border:1px solid #d4e9e7;border-radius:5px;padding:16px}
+.case-demo-links a:hover{background:#e2f1ef}
+.case-demo-links strong{font-size:12px;color:var(--teal)}
+.case-demo-links span{font-size:11px;color:var(--muted)}
+@media(max-width:1100px){.case-threat-grid,.case-route,.case-demo-links{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.case-threat-grid,.case-route,.case-demo-links{grid-template-columns:1fr}}
