@@ -14,8 +14,12 @@ class FakeStore:
  def __init__(self,record): self.rows=[dict(record,id=1,version=1)]; self.calls=[]
  def list(self): return copy.deepcopy(self.rows)
  def events(self): return []
+ def list_dba_tasks(self): return [dict(id='T01',task='Usuarios',status='PENDIENTE')]
+ def project_documents(self): return {'CATALOG':{'data':{'controls':[{'id':'5.12'}]}},'MATURITY':{'data':{'target':3.1,'rows':{}},'version':1}}
+ def save_maturity(self,data,version,role): self.calls.append(('maturity',data,version,role)); return version+1
  def save(self,data,id,version,role): self.calls.append((data,id,version,role)); return id or 2
  def check_runtime(self,role): self.calls.append(('check',role)); return dict(account='RCONF_APP',pdb='XEPDB1',results=[])
+ def database_snapshot(self): self.calls.append(('snapshot',)); return dict(account='RCONF_APP',pdb='XEPDB1',objects=[],privileges=['CREATE SESSION'],roles=['RCONF_RUNTIME'],risk_count=1,event_count=0)
 
 @pytest.fixture
 def oracle(monkeypatch,record):
@@ -31,7 +35,91 @@ def test_no_auth_no_data(oracle):
  assert client.get('/api/risks').status_code==401
  assert client.get('/api/events').status_code==401
  assert client.post('/api/checks/runtime').status_code==401
+ assert client.get('/api/database').status_code==401
+ assert client.get('/api/dba-tasks').status_code==401
  assert not store.calls
+
+def test_database_snapshot_is_authenticated_and_read_only(oracle):
+ client,store=oracle
+ response=client.get('/api/database',headers=auth('auditor'))
+ assert response.status_code==200
+ assert response.json['account']=='RCONF_APP'
+ assert store.calls==[('snapshot',)]
+ assert client.post('/api/database',headers=auth('gestor')).status_code==405
+
+def test_case_local_requires_session_and_loopback(oracle, monkeypatch):
+ client,store=oracle
+ assert client.get('/api/case-local').status_code==401
+ assert client.get('/api/case-local',headers=auth('auditor'),environ_base={'REMOTE_ADDR':'203.0.113.8'}).status_code==403
+ monkeypatch.setenv('WEBSITE_HOSTNAME','example.azurewebsites.net')
+ assert client.get('/api/case-local',headers=auth('auditor')).status_code==403
+ assert not store.calls
+
+def test_case_local_only_exposes_allowlisted_evidence(oracle, monkeypatch):
+ client,store=oracle
+ monkeypatch.setattr(store,'project_documents',lambda: {
+  'CASE_DBA_BEFORE': {'data': {'name':'antes.txt','content':'salida'}},
+  'CURRENT_DIAGNOSTIC': {'data': {'name':'actual.txt','content':'estado'}},
+  'PRIVATE_DOCUMENT': {'data': {'name':'privado.txt','content':'secreto'}}})
+ result=client.get('/api/case-local',headers=auth('analista'))
+ assert result.status_code==200
+ assert set(result.json['extra'])=={'CASE_DBA_BEFORE','CURRENT_DIAGNOSTIC'}
+ assert 'PRIVATE_DOCUMENT' not in result.get_data(as_text=True)
+
+def test_dba_task_catalog_requires_auth_and_is_read_only(oracle):
+ client,store=oracle
+ result=client.get('/api/dba-tasks',headers=auth('auditor'))
+ assert result.status_code==200
+ assert result.json[0]['id']=='T01'
+ assert client.post('/api/dba-tasks',headers=auth('auditor')).status_code==405
+
+def test_maturity_persistence_enforces_roles_and_validates_input(oracle):
+ client,store=oracle
+ assert client.get('/api/project').status_code==401
+ assert client.get('/api/project',headers=auth('auditor')).status_code==200
+ payload={'version':1,'target':3.1,'rows':{'5.12':{'before':1,'after':2,'beforeRef':'EV1','afterRef':'EV2','block':'R01','reviewed':False,'beforeStatus':'No cumple','afterStatus':'Parcial'}}}
+ assert client.put('/api/maturity',headers=auth('auditor'),json=payload).status_code==403
+ assert client.put('/api/maturity',headers=auth('analista'),json=payload).json['version']==2
+ payload['rows']['5.12']['before']=8
+ assert client.put('/api/maturity',headers=auth('analista'),json=payload).status_code==400
+ payload['rows']['5.12']['before']=1
+ payload['rows']['5.12']['block']=[]
+ assert client.put('/api/maturity',headers=auth('analista'),json=payload).status_code==400
+
+def test_script_library_allows_only_published_sql(monkeypatch):
+ monkeypatch.setenv('APP_MODE','demo')
+ client=create_app().test_client()
+ catalog=client.get('/api/scripts').json
+ assert len(catalog)==24
+ for script in catalog:
+  source=client.get('/api/scripts/'+script['name'])
+  assert source.status_code==200 and source.json['content']
+  assert client.get('/sql/'+script['name']).status_code==200
+ for path in ['/api/scripts/.env','/sql/.env','/api/scripts/%2e%2e%2f.env','/sql/%2e%2e%2f.env']:
+  assert client.get(path).status_code==404
+ assert client.get('/api/database').status_code==409
+
+def test_txt_exports_and_pending_bundle(monkeypatch):
+ from io import BytesIO
+ from zipfile import ZipFile
+ monkeypatch.setenv('APP_MODE','demo')
+ client=create_app().test_client()
+ for script in client.get('/api/scripts').json:
+  stem=script['name'][:-4]
+  txt=client.get('/txt/'+stem+'.txt')
+  assert txt.status_code==200
+  assert txt.get_data(as_text=True)==client.get('/api/scripts/'+script['name']).json['content']
+  for stage in ('before','after'):
+   result=client.get('/capture-template/'+stage+'/'+script['name'])
+   assert result.status_code==200 and b'PENDIENTE - NO EJECUTADO' in result.data
+ assert client.get('/txt/.env').status_code==404
+ assert client.get('/capture-template/unknown/05_verify_runtime.sql').status_code==404
+ bundle=client.get('/downloads/auditoria-txt.zip')
+ assert bundle.status_code==200
+ with ZipFile(BytesIO(bundle.data)) as archive:
+  assert len([n for n in archive.namelist() if n.startswith('txt/scripts/')])==24
+  assert b'PENDIENTE - NO EJECUTADO' in archive.read('txt/antes/14_case_before.txt')
+  assert not any('.env' in n or n.startswith('local-evidence/') for n in archive.namelist())
 
 def test_local_checks_are_fixed_and_local_only(oracle,monkeypatch):
  client,store=oracle

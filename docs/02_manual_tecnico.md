@@ -120,4 +120,15 @@ Para volver a demostración cambiar APP_MODE=demo y reiniciar; se conservan los 
 
 No se incluye un DROP USER CASCADE automático. La eliminación exige revisar dependencias y retención de evidencias con el DBA. Para mantenimiento, el DBA desbloquea temporalmente al propietario y concede únicamente los privilegios DDL necesarios; al terminar los revoca y vuelve a bloquear. Registrar el motivo y comparar permisos antes y después.
 
-Fuentes técnicas: S8 a S12 en `06_fuentes.md`. El estudiante compartió las salidas de instalación y de `05_verify_runtime.sql` y `04_verify_dba.sql`; T11 requiere correlación. La comprobación local adicional de cuatro SELECT fue ejecutada por Codex en el entorno del estudiante y debe revisarse antes de incluirla en la presentación. TCPS y Azure siguen sin prueba de integración.
+Para contrastar los 15 controles requeridos, usar `sql/08_auditor_controls.sql` conectado como DBA en XEPDB1. El archivo solo ejecuta consultas de lectura de catálogo; no instala, corrige ni cambia privilegios. La batería de 15 pruebas, madurez 0–4 y las 12 tareas DBA se muestran también en **Controles ISO**. Las salidas compartidas de T07/T08 son preliminares y T11 requiere correlación; TCPS, respaldo cifrado y Azure siguen sin prueba de integración. Las referencias oficiales están en formato APA 7 en `06_fuentes.md`.
+
+
+## Oracle y scripts desde la página
+
+La sección Oracle y scripts muestra los diez SQL reales del repositorio, con cuenta, PDB, fase, efecto y esperado; permite leer, copiar y descargar. No ejecuta scripts de instalación desde el navegador. Caso de estudio enlaza cuatro pasos al script pertinente.
+
+Con una sesión web autenticada, Consultar estado actual obtiene cuenta/PDB/servicio, objetos visibles de RCONF_OWNER, roles, privilegios de sistema y conteos desde las vistas. Usa ALL_OBJECTS, SESSION_PRIVS y SESSION_ROLES con la cuenta técnica; no requiere conceder DBA. La consulta no demuestra auditoría unificada ni inventaría todas las tablas. El JSON descargado conserva la fecha observada.
+
+El visor Antes/Después abre archivos .txt de hasta 1 MB en memoria de la pestaña; no los transmite ni persiste en Oracle. Al recargar se vacían. Un archivo con SP2-0640 u ORA-01017 muestra advertencia de conexión; ningún archivo se clasifica automáticamente como Cumple. El estudiante conserva los originales fuera del navegador.
+
+04_verify_dba.sql ahora muestra el contexto de captura y SESSIONID, CLIENT_IDENTIFIER y SQL_TEXT para investigar T11. 05_verify_runtime.sql muestra contexto y sentencias con SET ECHO ON. Deben capturarse con SPOOL después de conectar. La guía 10_pruebas_y_video.md detalla el recorrido de pruebas.

@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: ANTES
+SCRIPT: 13_case_audit.sql
+CUENTA / PDB: DBA/AUDIT_ADMIN · XEPDB1
+EFECTO: Crea política aislada
+ESPERADO: RCONF_CASE_READ habilitada para la cuenta del caso.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

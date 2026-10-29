@@ -1,5 +1,9 @@
 -- Run as RCONF_APP. Expected denials are intentional; do not stop on those errors.
 WHENEVER SQLERROR CONTINUE
+SET ECHO ON
+SET LINESIZE 180
+SET PAGESIZE 100
+SELECT SYSTIMESTAMP AS capture_time FROM dual;
 SELECT SYS_CONTEXT('USERENV','SESSION_USER') AS account,
  SYS_CONTEXT('USERENV','CON_NAME') AS pdb FROM dual;
 PROMPT POSITIVE: limited view must return synthetic masked data.

@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: DESPUES
+SCRIPT: 22_diagnostico_actual.sql
+CUENTA / PDB: DBA · XEPDB1
+EFECTO: Solo lectura
+ESPERADO: Salida actual para revisar; no sustituye una captura previa ni acredita cumplimiento por sí sola.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

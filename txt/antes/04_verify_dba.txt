@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: ANTES
+SCRIPT: 04_verify_dba.sql
+CUENTA / PDB: DBA · XEPDB1
+EFECTO: Solo lectura
+ESPERADO: Grants mínimos y eventos correlacionables. T11 sigue pendiente de correlación.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

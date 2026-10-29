@@ -7,3 +7,4 @@ __pycache__/
 *.spool
 *.zip
 local-evidence/
+local-secrets/

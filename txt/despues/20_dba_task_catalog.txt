@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: DESPUES
+SCRIPT: 20_dba_task_catalog.sql
+CUENTA / PDB: DBA · XEPDB1
+EFECTO: Primera instalación
+ESPERADO: 12 tareas propuestas; no representa evidencia de que se hayan ejecutado. No repetir la instalación.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: DESPUES
+SCRIPT: 08_auditor_controls.sql
+CUENTA / PDB: DBA · XEPDB1
+EFECTO: Solo lectura
+ESPERADO: Resultados que se contrastan con la matriz; sin filas o sin evidencia no equivale a Cumple.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

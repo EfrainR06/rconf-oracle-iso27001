@@ -1,0 +1,103 @@
+R-CONF — ESTADO ACTUAL Y PENDIENTES
+Administración de Bases de Datos · EIF402 · II ciclo 2026
+Estudiante: Efrain Retana Segura
+Fecha del resumen: 29 de octubre de 2026
+
+CARPETA DEL PROYECTO
+C:\Users\Usuario\Documents\Codex\2026-10-25\q\outputs\rconf-oracle
+
+Página local: http://127.0.0.1:8000/
+Repositorio configurado: https://github.com/EfrainR06/rconf-oracle-iso27001.git
+La aplicación usa Oracle 21c XE, PDB XEPDB1. El sitio debe estar ejecutándose
+y es necesario conectar una sesión autorizada.
+
+1. ESTADO ACTUAL
+
+- Hay cinco riesgos registrados en Oracle: R-CONF-01, R-CONF-21, R-CONF-22,
+  R-CONF-23 y R-CONF-24.
+- Las doce tareas críticas del DBA están registradas y mapeadas. Estar en el
+  catálogo no demuestra que todas se hayan ejecutado.
+- El catálogo tiene 20 controles: 15 solicitados y 5 complementarios.
+- La matriz permite registrar tarea, riesgo, control, nivel 0–4, evidencia y
+  estado Cumple, No cumple o Parcial, por etapa.
+- Los controles 8.3 y 8.11 tienen valoraciones antes y después, basadas en las
+  capturas reales del caso. La revisión preliminar fue realizada por Codex
+  (IA); el estudiante debe revisar los niveles, estados y su alcance.
+- Nueve controles tienen valoraciones parciales preliminares del estado actual
+  y otros cinco tienen referencias al diagnóstico sin calificación. Sus
+  evaluaciones siguen pendientes de completar y revisar.
+- Hay salidas SQL reales del caso de aplicación y DBA, antes y después. Las
+  tres pruebas del caso pasaron de 1/3 a 3/3 resultados esperados. Ese ensayo
+  no demuestra por sí solo el cumplimiento de todos los controles ISO.
+- Existe un diagnóstico de solo lectura del 29 de octubre de 2026. Es una
+  observación del estado actual, no una captura histórica de antes.
+
+2. PENDIENTES ANTES DE ENTREGAR
+
+[ ] Revisar los cinco riesgos: activo, amenaza, probabilidad, impacto,
+    tratamiento, controles y clasificación. La asignación solicita la tabla
+    R-CONF-01 a R-CONF-05; adaptar su presentación de forma consistente sin
+    perder la relación con los registros existentes en Oracle.
+
+[ ] Revisar las doce tareas DBA y su relación con riesgos, controles y
+    evidencia observable. Diferenciar tareas propuestas de tareas ejecutadas.
+
+[ ] Revisar la justificación y las evidencias de los 15 controles obligatorios:
+    A5.12, A5.15, A5.16, A5.17, A5.18, A5.33, A8.2, A8.3, A8.5,
+    A8.10, A8.11, A8.12, A8.13, A8.15 y A8.20.
+
+[ ] Completar y revisar la matriz con niveles y estados respaldados por
+    evidencia real. No asignar Cumple sin demostrarlo ni inventar mediciones.
+    La asignación requiere diseñar la matriz; la comparación antes/después
+    es parte de este proyecto y solo debe mostrarse cuando existan capturas.
+
+[ ] Revisar y ejecutar, cuando corresponda, las pruebas restantes con la
+    cuenta adecuada y conservar la salida original: fecha, cuenta, PDB,
+    procedimiento y resultados esperado y observado. Correlacionar T11 con
+    sentencia, sesión, hora y código; no concluir solo por un código aislado.
+
+[ ] Investigar dos observaciones del diagnóstico actual: la consulta mostró
+    tres piezas de respaldo visibles y ninguna marcada como cifrada; el perfil
+    DEFAULT muestra PASSWORD_VERIFY_FUNCTION = NULL. Verificar alcance,
+    vigencia y requisitos antes de modificar configuraciones.
+
+[ ] Revisar y actualizar el informe PDF, la guía y las referencias APA 7 para
+    que reflejen las pruebas ejecutadas, los resultados, las limitaciones y
+    el estado verdadero de cada control.
+
+[ ] Completar la tabla obligatoria de uso de IA con solicitudes realmente
+    utilizadas, contribuciones, validación o corrección del estudiante y
+    fuentes verificadas. Revisar y firmar la declaración correspondiente.
+
+[ ] Preparar y grabar el video explicativo de aproximadamente cinco minutos,
+    mostrando el caso, riesgos, matriz, pruebas y salidas originales.
+
+[ ] Revisar los cambios locales y actualizar el repositorio Git institucional.
+    Hay archivos modificados y nuevos sin registrar. No subir contraseñas,
+    tokens, .env, local-secrets ni evidencias sensibles sin revisarlas.
+
+3. DÓNDE ESTÁ CADA COSA
+
+- Sitio y código: app\
+- Scripts Oracle .sql: sql\
+- Scripts y plantillas en TXT: txt\
+- Informe académico: docs\01_informe_academico.pdf
+- Manual técnico: docs\02_manual_tecnico.pdf
+- Uso de IA: docs\04_uso_ia.md y docs\04_uso_ia.pdf
+- Guion de presentación: docs\08_guion_demostracion.pdf
+- Guía de objetivos: docs\12_objetivos_paso_a_paso.md
+- Guía del ensayo antes/después: docs\11_caso_antes_despues.md
+- Aplicación antes: local-evidence\antes\caso_pruebas.txt
+- Aplicación después: local-evidence\despues\caso_pruebas.txt
+- DBA antes: local-evidence\antes\caso_dba.txt
+- DBA después: local-evidence\despues\caso_dba.txt
+- Diagnóstico actual: local-evidence\diagnostico_actual_2026-10-29.txt
+- Script de diagnóstico: sql\22_diagnostico_actual.sql
+- Prueba de RCONF_APP: local-evidence\05_verify_runtime_2026-10-29_valido.txt
+
+En la página: Caso de estudio > Recorrido paso a paso > 07 Matriz de
+evaluación; 08 Pruebas técnicas; 09 Evidencias y scripts. En Oracle y scripts
+se puede ver el diagnóstico y su TXT completo.
+
+El caso usa datos sintéticos en una base Oracle real. Las consultas y
+referencias del laboratorio no constituyen una certificación ISO.

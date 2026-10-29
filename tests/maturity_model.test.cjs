@@ -1,0 +1,8 @@
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const {maturityPoints,validMaturityRow,cleanMaturityImport}=require('../app/static/maturity-model.js');
+const row=(block,before=1,after=3)=>({block,before,after,beforeRef:'EV-A · fecha · revisor',afterRef:'EV-B · fecha · revisor',reviewed:true});
+test('block progression preserves baseline until its remediation block',()=>{assert.deepEqual(maturityPoints(['a','b'],{a:row('R01'),b:row('RMAN')}),[1,2,2,2,2,2,2,3,3,3])});
+test('missing scores, references or review cannot be graphed as measurements',()=>{for(const r of [{...row('R01'),after:null},{...row('R01'),afterRef:''},{...row('R01'),reviewed:false},{...row('R01'),before:5}])assert.equal(Boolean(validMaturityRow(r)),false);assert.ok(maturityPoints(['a','b'],{a:row('R01')}).every(x=>x===null))});
+test('zero maturity is valid and reductions are retained',()=>{assert.equal(maturityPoints(['a'],{a:row('Red',4,0)})[9],0);assert.equal(maturityPoints(['a'],{a:row('Red',4,0)})[7],4)});
+test('import rejects unknown controls, blocks and invalid scores',()=>{for(const value of [{unknown:row('R01')},{a:row('unknown')},{a:{...row('R01'),after:9}}])assert.throws(()=>cleanMaturityImport(value,new Set(['a'])));assert.equal(cleanMaturityImport({a:row('R01')},new Set(['a'])).a.after,3)});
+test('retains reviewed statuses and rejects unrecognized ones on import',()=>{const base=row('R01');const parsed=cleanMaturityImport({a:{...base,beforeStatus:'No cumple',afterStatus:'Parcial'}},new Set(['a']));assert.equal(parsed.a.beforeStatus,'No cumple');assert.equal(parsed.a.afterStatus,'Parcial');assert.throws(()=>cleanMaturityImport({a:{...base,afterStatus:'Aprobado automaticamente'}},new Set(['a'])))});

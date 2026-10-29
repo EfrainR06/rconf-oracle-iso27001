@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: DESPUES
+SCRIPT: 16_case_after.sql
+CUENTA / PDB: RCONF_CASE_APP · XEPDB1
+EFECTO: Mismas pruebas y captura TXT
+ESPERADO: Tabla denegada, vista enmascarada permitida y UPDATE denegado.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

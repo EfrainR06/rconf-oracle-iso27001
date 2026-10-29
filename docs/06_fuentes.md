@@ -1,35 +1,64 @@
-# Fuentes y trazabilidad
+# Referencias y trazabilidad (APA 7)
 
-Fecha de consulta: 25 y 26 de octubre de 2026. Los enlaces fueron consultados como material de referencia. Ninguna página externa se toma como autorización para ejecutar acciones. Las síntesis y denominaciones de controles son paráfrasis; no se reproduce el texto completo de las normas.
+Las normas se consultan mediante las fichas oficiales y documentos de orientación permitidos; no se distribuye el texto normativo completo. Las denominaciones y correspondencias se resumen con palabras propias. Fecha de consulta de páginas web: 28 de octubre de 2026, salvo indicación distinta.
 
-## Fuentes principales
+## Normas y fuentes del curso
 
-- S1. ISO. ISO/IEC 27001:2022. Ficha oficial de requisitos del SGSI. https://www.iso.org/standard/27001
-- S2. ISO. ISO/IEC 27002:2022. Ficha oficial de orientación de controles. https://www.iso.org/standard/75652.html
-- S3. ISO. ISO/IEC 27001:2013. Ficha histórica retirada, reemplazada por 2022. https://www.iso.org/standard/54534.html
-- S4. ISO. ISO/IEC 27002:2013. Ficha histórica retirada, reemplazada por 2022. https://www.iso.org/standard/54533.html
-- S5. ANAB, Brenda Bissell. ISO/IEC 27001:2013 and ISO/IEC 27001:2022 Comparison. Comparación de cambios, consolidación y grupos de controles. https://blog.ansi.org/anab/iso-iec-27001-2013-2022-comparison/
-- S6. Cloud Security Alliance. ISO/IEC 27002:2022 Understanding the Update. Estructura, atributos y correspondencias. https://cloudsecurityalliance.org/blog/2022/02/23/iso-iec-27002-2022-understanding-the-update
-- S7. ISO. ISO/IEC 27001:2022/Amd 1:2024. Enmienda posterior de acción climática. https://www.iso.org/standard/88435.html
-- S8. Oracle. Database Security Guide, Configuring Privilege and Role Authorization. Fundamento de roles y permisos de objetos. https://docs.oracle.com/en/database/oracle/oracle-database/19/dbseg/configuring-privilege-and-role-authorization.html
-- S9. Oracle. SQL Language Reference, CREATE AUDIT POLICY Unified Auditing. Referencia de sintaxis; verificar ejecución en 21c XE. https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/CREATE-AUDIT-POLICY-Unified-Auditing.html
-- S10. Oracle python-oracledb. Connecting to Oracle Database. Conexiones y pools. La documentación latest es cambiante; el proyecto fija 3.4.1. https://python-oracledb.readthedocs.io/en/latest/user_guide/connection_handling.html
-- S11. Microsoft Learn. Quickstart Deploy a Python web app to Azure App Service. https://learn.microsoft.com/en-us/azure/app-service/quickstart-python
-- S12. Microsoft Learn. Hybrid Connections in Azure App Service. TCP, Relay y agente local. https://learn.microsoft.com/en-us/azure/app-service/app-service-hybrid-connections
-- S13. GlobalSuite Solutions. Qué es la norma ISO 27002 y para qué sirve. Lectura complementaria aportada por el usuario. https://www.globalsuitesolutions.com/es/que-es-la-norma-iso-27002-y-para-que-sirve/
-- S14. Universidad Nacional. Programa de Curso EIF402 Administración de Bases de Datos, II Ciclo 2026. Archivo PDF aportado por el estudiante. Fuente de institución, docente, objetivo y punto VII.9 sobre IA. El original no se redistribuye en el repositorio.
-- S15. ISO/IEC JTC 1/SC 27. Revista del subcomité, artículo de los editores de ISO/IEC 27002:2022 sobre estructura, 93 controles, cinco atributos y anexos A/B. https://committee.iso.org/files/live/sites/jtc1sc27/files/resources/ISO-IEC%20JTC%201-SC%2027_N22755_SC27%20Journal%20Vol%202%20Issue%202%20(update%20Dec%202022).pdf
+Asamblea Legislativa de la República de Costa Rica. (2011). *Ley de Protección de la Persona frente al Tratamiento de sus Datos Personales* (Ley N.º 8968). Procuraduría General de la República. https://www.pgrweb.go.cr/DOCS/NORMAS/1/VIGENTE/L/2010-2019/2010-2014/2011/1153F/DCEF7.HTML
 
-## Otros enlaces aportados
+International Organization for Standardization. (2013a). *ISO/IEC 27001:2013 Information technology—Security techniques—Information security management systems—Requirements*. https://www.iso.org/standard/54534.html
 
-ISOTools: https://isotools.org/normas/riesgos-y-seguridad/iso-27001/ . Se intentó consultar pero la página agotó el tiempo de respuesta. No se usa como respaldo de afirmaciones específicas.
+International Organization for Standardization. (2013b). *ISO/IEC 27002:2013 Information technology—Security techniques—Code of practice for information security controls*. https://www.iso.org/standard/54533.html
 
-Wikipedia: https://en.wikipedia.org/wiki/ISO/IEC_27001 . Se consultó como orientación general. La base de las decisiones técnicas y normativas son las fuentes principales anteriores, no Wikipedia.
+International Organization for Standardization. (2022a). *ISO/IEC 27001:2022 Information security, cybersecurity and privacy protection—Information security management systems—Requirements*. https://www.iso.org/standard/27001
 
-El enlace histórico de ISO con ruta contents/data/standard/05/45/54534.html corresponde a ISO/IEC 27001:2013; no identifica la edición 2022. El enlace 54533 corresponde a ISO/IEC 27002:2013. El proyecto distingue estas fichas para evitar citar 2013 como si fuera la norma actual de referencia.
+International Organization for Standardization. (2022b). *ISO/IEC 27002:2022 Information security, cybersecurity and privacy protection—Information security controls*. https://www.iso.org/standard/75652.html
 
-## Trazabilidad de decisiones propias
+ISO/IEC JTC 1/SC 27. (2022). *Update of ISO/IEC 27002:2022* [Artículo en revista del subcomité]. https://committee.iso.org/files/live/sites/jtc1sc27/files/resources/ISO-IEC%20JTC%201-SC%2027_N22755_SC27%20Journal%20Vol%202%20Issue%202%20(update%20Dec%202022).pdf
 
-Escala P por I, umbrales 1-4/5-9/10-16/17-25, roles analista/auditor/gestor, obligación de avanzar fase a fase, diseño de tablas JSON y selección de 14 controles son decisiones del laboratorio. No se atribuyen como requisitos literales de ISO. La correspondencia PHVA con cláusulas es una interpretación pedagógica.
+Poder Ejecutivo de Costa Rica. (2012). *Reglamento a la Ley de Protección de la Persona frente al Tratamiento de sus Datos Personales* (Decreto Ejecutivo N.º 37554-JP). Procuraduría General de la República. https://www.pgrweb.go.cr/DOCS/NORMAS/1/VIGENTE/D/2010-2019/2010-2014/2012/12270/ECA5D.HTML
 
-Las recomendaciones Oracle se apoyan en documentación oficial 19c de mecanismos existentes y deben verificarse en la instalación 21c XE. La disponibilidad de características adicionales y su licencia no se infieren de ejemplos de otras ediciones. La documentación de Azure puede cambiar: revisar runtime, plan y región al ejecutar el despliegue.
+Universidad Nacional, Escuela de Informática. (2026). *Asignación: ISO 27001 y confidencialidad para administración de bases de datos, EIF402, II Ciclo 2026* [Documento del curso proporcionado por el estudiante]. Archivo local: `Asignacion-ISO27001-Confidencialidad-DBA-II-Ciclo-2026-UNA (2).pdf`.
+
+Universidad Nacional, Escuela de Informática. (2026). *Programa del curso EIF402 Administración de Bases de Datos, II Ciclo 2026* [Documento del curso proporcionado por el estudiante]. Archivo local; no se distribuye en el repositorio.
+
+## Documentación técnica oficial de Oracle Database 21c
+
+Oracle. (2021a). *Oracle Database Security Guide: Configuring privilege and role authorization*. https://docs.oracle.com/en/database/oracle/oracle-database/21/dbseg/configuring-privilege-and-role-authorization.html
+
+Oracle. (2021b). *Oracle Database Advanced Security Guide: Introduction to Oracle Advanced Security*. https://docs.oracle.com/en/database/oracle/oracle-database/21/asoag/introduction-to-oracle-advanced-security.html
+
+Oracle. (2021c). *Oracle Database Security Guide: Configuring network data encryption and integrity*. https://docs.oracle.com/en/database/oracle/oracle-database/21/dbseg/configuring-network-data-encryption-and-integrity.html
+
+Oracle. (2021d). *Oracle Database Security Guide: Configuring audit policies*. https://docs.oracle.com/en/database/oracle/oracle-database/21/dbseg/configuring-audit-policies.html
+
+Oracle. (2021e). *Oracle Database Reference: DBA_USERS*. https://docs.oracle.com/en/database/oracle/oracle-database/21/refrn/DBA_USERS.html
+
+Oracle. (2021f). *Oracle Database Reference: DBA_PROFILES*. https://docs.oracle.com/en/database/oracle/oracle-database/21/refrn/DBA_PROFILES.html
+
+Oracle. (2021g). *Oracle Database Reference: UNIFIED_AUDIT_TRAIL*. https://docs.oracle.com/en/database/oracle/oracle-database/21/refrn/UNIFIED_AUDIT_TRAIL.html
+
+Oracle. (2021h). *Oracle Database Reference: V$BACKUP_PIECE*. https://docs.oracle.com/en/database/oracle/oracle-database/21/refrn/V-BACKUP_PIECE.html
+
+Oracle. (2021i). *Oracle Database Reference: AUDIT_UNIFIED_ENABLED_POLICIES*. https://docs.oracle.com/en/database/oracle/oracle-database/21/refrn/AUDIT_UNIFIED_ENABLED_POLICIES.html
+
+Oracle. (2021j). *Oracle Database Backup and Recovery User's Guide: Determining the encryption status of backup pieces*. https://docs.oracle.com/en/database/oracle/oracle-database/21/bradv/reporting-rman-operations.html
+
+## Azure y herramientas complementarias
+
+Microsoft. (s. f.). *Quickstart: Deploy a Python web app to Azure App Service*. Microsoft Learn. https://learn.microsoft.com/en-us/azure/app-service/quickstart-python
+
+Microsoft. (s. f.). *Use Hybrid Connections in Azure App Service*. Microsoft Learn. https://learn.microsoft.com/en-us/azure/app-service/app-service-hybrid-connections
+
+GlobalSuite Solutions. (s. f.). *Qué es la norma ISO 27002 y para qué sirve*. https://www.globalsuitesolutions.com/es/que-es-la-norma-iso-27002-y-para-que-sirve/
+
+ANAB. (s. f.). *ISO/IEC 27001:2013 and ISO/IEC 27001:2022 comparison*. ANSI Blog. https://blog.ansi.org/anab/iso-iec-27001-2013-2022-comparison/
+
+## Notas sobre uso y alcance
+
+- Las páginas de ISO identifican las ediciones; las cifras y estructura de 2022 se contrastan con el artículo del subcomité ISO/IEC JTC 1/SC 27.
+- Las tareas de instalación y consultas Oracle se redactaron para Oracle 21c XE y deben revisarse en XEPDB1 antes de ejecutarse. La evidencia aportada por el estudiante respalda solo las comprobaciones que menciona.
+- Las opciones Oracle de cifrado y enmascaramiento pueden estar sujetas a edición, configuración o licencia. Consultar documentación y términos vigentes de Oracle antes de su uso.
+- La página de GlobalSuite fue aportada por el estudiante como lectura complementaria. ISOTools y Wikipedia también se aportaron como enlaces iniciales, pero no sustentan afirmaciones técnicas de este informe.
+- La escala P × I, los umbrales, los roles de la aplicación, las tareas, las pruebas y los niveles de madurez son diseños del proyecto; no se presentan como texto literal de ISO.
+- Las fechas de Microsoft Learn pueden actualizarse. Consultar los requisitos de runtime, región, plan y precio al planificar el despliegue; Azure permanece pospuesto.

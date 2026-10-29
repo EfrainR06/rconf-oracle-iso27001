@@ -1,102 +1,133 @@
-# Gestión de riesgos de confidencialidad en Oracle
+# Controles para mitigar riesgos de confidencialidad en Oracle
 
-## Identificación del proyecto
+## Identificación académica
 
-Estudiante responsable: Efrain Retana Segura. Universidad Nacional, Facultad de Ciencias Exactas y Naturales, Escuela de Informática. Curso EIF402 Administración de Bases de Datos, II Ciclo 2026. Docente: Johnny Villalobos Murillo. Fecha: 25 de octubre de 2026.
+**Estudiante:** Efrain Retana Segura. **Institución:** Universidad Nacional, Facultad de Ciencias Exactas y Naturales, Escuela de Informática. **Curso:** EIF402 Administración de Bases de Datos, II Ciclo 2026. **Docente:** Johnny Villalobos Murillo. **Fecha:** 28 de octubre de 2026.
 
-Este proyecto propone un laboratorio para mitigar riesgos de confidencialidad en Oracle Database 21c XE. Integra un sitio web, un registro de riesgos, controles de acceso de base de datos y una guía de verificación. El propósito es pasar de una recomendación de seguridad a una configuración justificable y comprobable. Se utiliza información sintética para evitar exponer datos de personas.
+## Resumen
 
-## Vinculación con el objetivo del curso
+Este proyecto diseña un laboratorio para gestionar riesgos de confidencialidad en Oracle Database 21c XE. El sitio R-CONF relaciona riesgos, controles seleccionados de ISO/IEC 27001:2022 e ISO/IEC 27002:2022, PHVA, mínimo privilegio y evidencia técnica. Una instalación en XEPDB1 permite mostrar cuentas separadas, vistas de alcance limitado, un paquete PL/SQL, políticas de auditoría y pruebas positivas y negativas. Las salidas compartidas por el estudiante son compatibles con la denegación de tablas base en T07 y T08. T11 continúa abierto porque una entrada de auditoría con código de retorno 0 aún debe correlacionarse. Los demás controles se presentan como propuestas o pendientes de comprobación; no se afirma cumplimiento, auditoría certificada ni despliegue Azure.
 
-El programa busca que el estudiante proponga, implemente y aplique controles en los procesos de administración de bases de datos para disminuir riesgos inherentes de tecnologías de información. El proyecto lo concreta al identificar activos y amenazas, definir permisos mínimos, preparar scripts de configuración y establecer pruebas positivas y negativas. La evidencia de ejecución debe completar la relación entre propuesta, implementación y eficacia.
+## Objetivo general y alcance
 
-Objetivo general del proyecto: proponer e implementar un laboratorio de controles para mitigar riesgos de confidencialidad asociados a Oracle, con orientación de ISO/IEC 27001:2022 e ISO/IEC 27002:2022, mediante PHVA y mínimo privilegio, y verificar los resultados con evidencias documentadas.
+**Objetivo general:** diseñar e implementar un laboratorio académico de controles orientados a mitigar riesgos de confidencialidad asociados a Oracle, con referencia a ISO/IEC 27001:2022 e ISO/IEC 27002:2022, aplicando PHVA y mínimo privilegio, y establecer pruebas y evidencias que permitan valorar los resultados.
 
-Objetivos específicos: caracterizar escenarios de acceso indebido; comparar las ediciones 2013 y 2022; diseñar una matriz de roles y controles; implementar un prototipo web y objetos Oracle; preparar la ejecución de pruebas y el despliegue en Azure. El logro práctico depende de las comprobaciones locales registradas por el estudiante.
+Se analiza la lectura o revelación no autorizada en cuentas Oracle, vistas, operaciones de la aplicación, secretos, canales de red, logs, exportaciones y copias de respaldo. Los datos de demostración son sintéticos. Integridad y disponibilidad se consideran solo cuando ayudan a resguardar la confidencialidad.
 
-## Alcance y delimitación
+El sitio ofrece modo de demostración y modo Oracle. La demostración conserva datos de ejemplo en el navegador y no acredita controles. El modo Oracle usa una API Flask y una cuenta técnica con privilegios limitados. El artefacto interactivo local se abre en `http://127.0.0.1:8000/#controls`; el código está en `https://github.com/EfrainR06/rconf-oracle-iso27001`. El prototipo no constituye un SGSI completo, una Declaración de Aplicabilidad (SoA) integral, una evaluación jurídica, una auditoría independiente ni una certificación ISO. Azure queda planificado; el despliegue aún no se realizó.
 
-Se estudia la revelación o lectura no autorizada de información. Integridad y disponibilidad se consideran cuando ayudan a proteger ese objetivo, pero no son el resultado principal evaluado. El alcance incluye cuentas, vistas, paquete PL/SQL, secretos de conexión, canal de red, registros de auditoría, exportaciones y respaldos. No incluye un SGSI completo, certificación, pruebas de penetración exhaustivas ni la aplicación automática de todos los controles de las normas.
+## Marco teórico
 
-El sitio usa dos modos explícitos. La demostración conserva ejemplos en el navegador. El modo Oracle persiste riesgos y eventos mediante una cuenta limitada. Ningún indicador de la demostración acredita una evaluación real de la base de datos.
+### 2013 frente a 2022
 
-## Fundamento normativo
+ISO/IEC 27001 especifica requisitos para establecer, operar, evaluar y mejorar un sistema de gestión de seguridad de la información (SGSI). ISO/IEC 27002 proporciona guía de selección e implementación de controles; no sustituye los requisitos de 27001 ni define por sí sola la certificación (International Organization for Standardization [ISO], 2013a, 2013b, 2022a, 2022b).
 
-ISO/IEC 27001 establece requisitos de un sistema de gestión de seguridad de la información. ISO/IEC 27002 ofrece orientación para seleccionar e implementar controles. Esta diferencia permite justificar tanto el proceso de gestión como la decisión técnica sin confundir una herramienta con un SGSI certificado. Las fichas oficiales de ambas ediciones son la referencia bibliográfica principal [S1-S4].
+La edición 2013 de ISO/IEC 27002 agrupaba 114 controles en 14 dominios. La edición 2022 reorganiza 93 controles en cuatro temas: organizacional, personas, físico y tecnológico. Parte de la diferencia corresponde a fusiones, actualización de alcance y redacción; la cifra menor no significa que se hayan retirado sin más 21 medidas. La edición 2022 añadió once controles, incluidos seguridad en nube (5.23), gestión de configuración (8.9), eliminación (8.10), enmascaramiento (8.11), prevención de fuga (8.12), monitoreo (8.16) y codificación segura (8.28). También introdujo cinco atributos para filtrar los controles y correspondencias con la edición anterior (ISO/IEC JTC 1/SC 27, 2022).
 
-Los controles deben elegirse a partir del contexto y del tratamiento de riesgos. Un listado técnico no sustituye la Declaración de Aplicabilidad ni la justificación de inclusiones y exclusiones del Anexo A. Este trabajo presenta una selección parcial, suficiente para demostrar el método dentro del laboratorio, y deja pendiente el análisis de aplicabilidad completo si se amplía a una organización.
+ISO/IEC 27001:2022 mantiene el enfoque basado en riesgos e incorpora, entre otros cambios, el requisito 6.3 para planificar cambios del SGSI. El principio de mínimo privilegio no apareció por primera vez en 2022: ya tenía correspondencias en controles de acceso de 2013. En 2022 se relaciona especialmente con 5.15–5.18, 8.2 y 8.3. Las equivalencias no siempre son uno a uno; las referencias de este proyecto son orientativas, no sustituyen el texto normativo ni una SoA.
 
-## Diferencias entre 2013 y 2022
+### Confidencialidad, privilegio mínimo y defensa en profundidad
 
-La estructura de controles pasó de 114 en 14 dominios a 93 en cuatro grupos: organizacionales 37, personas 8, físicos 14 y tecnológicos 34. Hubo consolidación y cambios de redacción, además de once controles nuevos [S15]. Reducir el número no equivale a reducir el nivel de protección requerido. ISO/IEC 27001:2022 también incorpora el apartado 6.3 para planificar cambios del sistema de gestión [S5].
+La confidencialidad busca impedir que información sea revelada a personas, procesos o entidades no autorizadas. El mínimo privilegio limita cada cuenta a los datos y operaciones necesarios para una función aprobada. En Oracle se traduce en identidades con dueño claro, roles separados, concesiones explícitas y revisión de privilegios directos e indirectos. `RCONF_APP` puede consultar vistas y ejecutar un paquete de aplicación; no debe recibir DBA, `SELECT ANY TABLE` ni acceso directo a tablas sensibles. Las pruebas positivas comprueban que la función autorizada opera y las negativas verifican que los accesos innecesarios sean denegados (Oracle, 2021a).
 
-ISO/IEC 27002:2022 añade cinco atributos a cada control, útiles para examinar el catálogo por distintas perspectivas. Su Anexo A explica los atributos y el Anexo B ofrece correspondencias con 2013 [S15]. Las equivalencias del sitio son orientativas y parciales: las fusiones impiden suponer que cada control nuevo corresponde a uno solo anterior.
+La defensa en profundidad combina capas: autenticación y autorización; vistas o interfaces limitadas; cifrado en tránsito y en reposo cuando corresponda; auditoría; protección de respaldos; gestión de secretos y revisión humana. El enfoque Zero Trust puede orientar la comprobación explícita de identidad, contexto y autorización, pero no se atribuye a una cláusula ISO específica ni se considera habilitado por el prototipo.
 
-Los once controles nuevos son: 5.7 inteligencia de amenazas; 5.23 servicios de nube; 5.30 preparación TIC para continuidad; 7.4 monitoreo de seguridad física; 8.9 configuración; 8.10 eliminación de información; 8.11 enmascaramiento; 8.12 prevención de fugas; 8.16 monitoreo; 8.23 filtrado web; 8.28 codificación segura. Para Oracle destacan la exposición de datos, las configuraciones y la conectividad a Azure [S5-S6].
+### Opciones Oracle y límites de los mecanismos
 
-El mínimo privilegio ya se atendía en 2013 en la familia de control de acceso. En 2022 se relaciona con 5.15 a 5.18, 8.2 y 8.3. No debe presentarse como una novedad de 2022. La enmienda climática Amd 1:2024 es posterior y se distingue de la publicación original de 2022 [S7].
+Una vista que sustituye datos sintéticos permite demostrar reducción de columnas y denegación de tablas base. No equivale a Oracle Data Redaction ni acredita anonimización. Oracle Virtual Private Database puede aplicar políticas de fila y columna en entornos compatibles. TDE protege archivos de datos seleccionados en reposo; la red, los respaldos y la gestión de claves requieren decisiones y comprobaciones separadas. Data Redaction, TDE y Database Vault pueden depender de edición, opción o licencia; su disponibilidad no se infiere de Oracle XE. Para datos en tránsito debe validarse configuración de cifrado e integridad de Oracle Net, TLS/TCPS y certificados, además de limitar listener y rutas de red (Oracle, 2021b, 2021c, 2021d).
 
-## Método de evaluación
+El cifrado no reemplaza al control de acceso. Las copias RMAN deben revisar cifrado, repositorio y custodia de claves, y demostrar restauración; Oracle documenta la columna `ENCRYPTED` en `V$BACKUP_PIECE` para revisar el estado de cada pieza (Oracle, 2021h, 2021j). Los registros de auditoría requieren retención, acceso restringido, correlación y revisión; la vista `AUDIT_UNIFIED_ENABLED_POLICIES` informa las políticas habilitadas y `UNIFIED_AUDIT_TRAIL` conserva eventos (Oracle, 2021d, 2021g, 2021i). Un SIEM o DLP empresarial no forma parte del prototipo. Las exportaciones y los clones DEV/TEST deben evitar datos reales en claro y conservar aprobación y sanitización.
 
-La unidad de análisis es un escenario R-CONF: activo, amenaza, debilidad, consecuencia y responsable. Se propone una escala ordinal de 1 a 5 y el producto probabilidad por impacto como criterio interno del proyecto. ISO no prescribe esta fórmula. Las cifras de demostración son hipótesis educativas, no frecuencias medidas ni pérdidas económicas estimadas.
+### Contexto costarricense
 
-Probabilidad 1: acceso muy restringido y pocas oportunidades observadas; 2: oportunidad limitada; 3: escenario plausible con una debilidad relevante; 4: exposición repetida o privilegios amplios; 5: exposición continua o mecanismo trivial. La valoración definitiva debe basarse en inventario, revisiones de permisos e incidentes del contexto real.
+La Ley N.º 8968 y su reglamento regulan la protección de datos personales y el derecho a la autodeterminación informativa en Costa Rica (Asamblea Legislativa de la República de Costa Rica, 2011; Poder Ejecutivo de Costa Rica, 2012). Este proyecto traduce el tema a prácticas técnicas de confidencialidad; no determina por sí solo la base jurídica, obligaciones de una organización, plazos de retención o requisitos de consentimiento. La aplicabilidad legal debe verificarse según el contexto y con la orientación del curso o personal competente.
 
-Impacto 1: revelación limitada de datos públicos o de escasa sensibilidad; 2: información interna de un proceso; 3: información confidencial de alcance reducido; 4: datos personales o comerciales sensibles con afectación importante; 5: revelación extensa con consecuencias graves para titulares u organización. Si se manejan datos reales deben ajustarse los criterios al contexto y obligaciones aplicables.
+## Método de valoración y riesgos R-CONF
 
-Se clasifica 1-4 bajo, 5-9 medio, 10-16 alto y 17-25 crítico. Un resultado alto o crítico exige tratamiento prioritario. Un residual mayor a 4 no se registra como mitigado en el prototipo: requiere continuar el tratamiento o una aceptación explícita del gestor con evidencia y justificación. La escala ordinal sirve para ordenar decisiones y no mide una reducción estadística demostrada.
+La matriz usa una escala ordinal de probabilidad (P) e impacto (I) de 1 a 5; el producto P × I es un criterio interno del laboratorio, no una fórmula prescrita por ISO. Los intervalos son: 1–4 bajo, 5–9 medio, 10–16 alto y 17–25 crítico. Los números describen hipótesis educativas; los residuales son estimaciones objetivo y no reducciones empíricamente medidas.
 
-## Catálogo inicial de escenarios
+- **R-CONF-01 — Permisos excesivos en cuentas de aplicación.** Activo: esquema de clientes; escenario: cuenta comprometida con lectura amplia. Inherente P4 × I5 = 20, crítico. Residual objetivo P2 × I5 = 10, alto. Responsable: DBA. Tratamiento: roles mínimos, vistas y paquete; pruebas de lectura permitida, tabla base denegada y ausencia de privilegios ANY.
+- **R-CONF-02 — Cuentas activas sin necesidad vigente.** Activo: identidades Oracle; escenario: acceso de una cuenta fuera de función. Inherente P3 × I4 = 12, alto. Residual objetivo P1 × I4 = 4, bajo. Responsable: dueño de accesos. Tratamiento: revisión periódica, justificación y bloqueo de cuentas sobrantes.
+- **R-CONF-03 — Credenciales en código o repositorios.** Activo: secretos de conexión; escenario: credencial reutilizada por acceso al código. Inherente P4 × I5 = 20, crítico. Residual objetivo P1 × I5 = 5, medio. Responsable: desarrollo/DBA. Tratamiento: rotación, secretos fuera del repositorio y control de acceso al almacén.
+- **R-CONF-04 — Tráfico de base de datos desprotegido.** Activo: canal aplicación–Oracle/Azure; escenario: interceptación o conexión no autorizada. Inherente P3 × I5 = 15, alto. Residual objetivo P1 × I5 = 5, medio. Responsable: red. Tratamiento: rutas restringidas, TCPS/TLS y validación de certificado.
+- **R-CONF-05 — Lectura innecesaria de datos personales.** Activo: datos sintéticos de clientes; escenario: usuario técnico accede a campos fuera de su necesidad. Inherente P4 × I4 = 16, alto. Residual objetivo P1 × I4 = 4, bajo. Responsable: dueño del dato. Tratamiento: reducir columnas, vista enmascarada de demostración y denegación de tabla base.
 
-- R-CONF-001: cuenta de aplicación con DBA o permisos amplios; riesgo inherente 20 y residual propuesto 10. Tratamiento: rol limitado, paquete y vistas; responsable DBA. Prueba: denegar tabla base y permitir la vista requerida.
-- R-CONF-002: cuentas activas sin necesidad de negocio; inherente 12 y residual propuesto 4. Tratamiento: revisión del ciclo de vida; responsable de accesos. Evidencia: inventario revisado y bajas autorizadas.
-- R-CONF-003: credenciales en código o repositorios; inherente 20 y residual propuesto 5. Tratamiento: separar secretos y rotarlos; responsable de desarrollo. Evidencia: revisión del repositorio y de permisos al almacén de secretos.
-- R-CONF-004: tráfico de conexión desprotegido; inherente 15 y residual propuesto 5. Tratamiento: conexión privada y TCPS con certificado validado; responsable de red. Evidencia: configuración y prueba del canal.
-- R-CONF-005: lectura innecesaria de datos personales; inherente 16 y residual propuesto 4. Tratamiento: limitar columnas y enmascarar mediante vista; dueño del dato. Evidencia: vista permitida y tabla base denegada.
-- R-CONF-006: exportaciones o evidencias compartidas sin restricción; inherente 15 y residual propuesto 10. Tratamiento: clasificación, permisos de almacenamiento y revisión de exportaciones; responsable de seguridad.
-- R-CONF-007: lecturas indebidas sin registro; inherente 12 y residual propuesto 8. Tratamiento: auditoría y revisión periódica por auditor; evidencia de eventos y atención de anomalías.
-- R-CONF-008: copias de respaldo legibles por terceros; inherente 15 y residual propuesto 5. Tratamiento: cifrado, permisos y separación de claves; responsable DBA. Se documenta como plan, no se automatiza el respaldo.
+R-CONF-06 corresponde a exportaciones y evidencias; R-CONF-07, a lectura sin rastro; R-CONF-08, a respaldos legibles por terceros. El registro web contiene ocho escenarios. Para el análisis, un residual mayor a 4 continúa en tratamiento; cualquier aceptación requiere decisión motivada del gestor y evidencia revisada.
 
-La selección no supone que todas las debilidades existan en el Oracle del estudiante. Los valores residuales son objetivos estimados y no resultados de controles verificados.
+## 12 tareas DBA relacionadas con confidencialidad
 
-## Aplicación del ciclo PHVA
+1. **Usuarios:** inventariar cuentas, dueños, altas, bajas, bloqueos y necesidad vigente.
+2. **Privilegios:** revisar grants directos, roles heredados, permisos ANY y PUBLIC; separar owner, app y auditor.
+3. **Autenticación:** revisar perfiles, administración de credenciales y rotación; nunca guardar secretos en el repositorio.
+4. **TDE:** evaluar si se requiere, si la edición/licencia lo permite y cómo se custodiarán claves; no asumir habilitación en XE.
+5. **Enmascaramiento:** usar datos sintéticos o vistas; evaluar Data Redaction/VPD solo tras comprobar soporte/licencia.
+6. **Respaldos:** restringir archivos, cifrar cuando sea compatible, separar claves y comprobar restauración.
+7. **Auditoría:** configurar eventos, revisar Unified Audit Trail, correlacionar y escalar anomalías.
+8. **Parches:** comparar versión y `DBA_REGISTRY_SQLPATCH` con línea base y registrar cambios.
+9. **Listener/red:** restringir orígenes y puertos, revisar configuración y evaluar TLS/TCPS.
+10. **Eliminación:** aprobar retención y borrado seguro de datos, copias y exportaciones; la papelera es solo señal parcial.
+11. **Logs:** limitar lectura/escritura/borrado, aplicar retención y revisar cambios y accesos.
+12. **Clones DEV/TEST:** documentar aprobación, sanitizar antes de habilitar usuarios y evitar datos productivos en claro.
 
-Planificar: identificar activos y accesos, registrar escenarios, acordar criterios y responsable, y aprobar el tratamiento. Entregables: inventario, registro de riesgos y selección de controles. Se relaciona pedagógicamente con las cláusulas 4 a 7 del sistema de gestión.
+## Selección de los 15 controles requeridos
 
-Hacer: aplicar scripts en la PDB de laboratorio, asignar funciones, separar secretos y preparar auditoría y canal de comunicación. Entregables: configuración registrada y evidencias de ejecución. Se relaciona con la operación de la cláusula 8.
+La asignación solicita justificar los siguientes controles del Anexo A de 27001:2022 y guiarse por 27002:2022. Las correspondencias a 2013 son aproximadas y deben contrastarse con la versión normativa disponible.
 
-Verificar: ejecutar pruebas con las cuentas reales, comprobar concesiones directas e indirectas, revisar denegaciones y eventos, y reevaluar el residual. Entregables: actas de prueba con esperado, observado y conclusión. Se relaciona con la evaluación de la cláusula 9.
+- **5.12 Clasificación de la información** (relación orientativa: A.8.2.1/A.8.2.2): inventario, nivel de sensibilidad y reglas de manejo; evidencia esperada: catálogo de datos y aprobación.
+- **5.15 Control de acceso** (A.9.1.1/A.9.1.2): matriz de roles y necesidad de conocer; evidencia: autorizaciones y revisión.
+- **5.16 Gestión de identidades** (A.9.2.1): ciclo de vida de cuentas; evidencia: altas/cambios/bajas y DBA_USERS.
+- **5.17 Información de autenticación** (A.9.2.4 y controles relacionados): proteger, distribuir y rotar secretos; evidencia: proceso y registro sin divulgar claves.
+- **5.18 Derechos de acceso** (A.9.2.2/A.9.2.5/A.9.2.6): aprobar, revisar y revocar concesiones; evidencia: comparación de privilegios.
+- **5.33 Protección de registros** (A.18.1.3): proteger registros y expediente; evidencia: permisos, retención y responsable.
+- **8.2 Derechos de acceso privilegiado** (A.9.2.3): separar tareas DBA, owner, app y revisión; evidencia: DBA_SYS_PRIVS y DBA_ROLE_PRIVS.
+- **8.3 Restricción de acceso a la información** (A.9.4.1): exponer vistas/paquete y denegar tablas base; evidencia: prueba positiva y negativa.
+- **8.5 Autenticación segura** (A.9.4.2/A.9.4.3): proteger autenticación y perfiles; evidencia: revisión de DBA_USERS/DBA_PROFILES y procedimiento de secretos.
+- **8.10 Eliminación de información** (nuevo en 2022): definir ciclo de vida y borrado de exportaciones/copias; evidencia: política y acta.
+- **8.11 Enmascaramiento de datos** (nuevo en 2022): limitar o sustituir datos de prueba; evidencia: vista sintética y prueba de acceso.
+- **8.12 Prevención de fuga de datos** (nuevo en 2022): restringir exportaciones y destinos; evidencia: política, permisos y registros de revisión.
+- **8.13 Respaldo de la información** (A.12.3.1): restringir y verificar copias; evidencia: RMAN, cifrado, custodia y restauración.
+- **8.15 Registro de eventos** (A.12.4.1–A.12.4.3): registrar accesos y cambios pertinentes; evidencia: políticas y Unified Audit Trail.
+- **8.20 Seguridad de redes** (A.13.1.1–A.13.1.3): proteger listener, rutas y tráfico; evidencia: configuración, reglas y servicio cifrado.
 
-Actuar: aprobar una aceptación justificada o corregir el tratamiento; definir fecha de nueva revisión y volver a Planificar ante hallazgos. Se relaciona con la mejora de la cláusula 10. El prototipo exige referencias de evidencia para avanzar y una decisión del gestor para registrar mitigación o aceptación. Una referencia escrita no sustituye la revisión de su contenido.
+El sitio incluye una matriz de madurez inicial 0–4 para esos 15 controles, con evidencia disponible, estado (Cumple/No cumple/Parcial) y prueba vinculada. La autoevaluación conservadora marca controles como No cumple o Parcial mientras falte evidencia. No hay control clasificado como Cumple; los puntajes representan evidencia del laboratorio, no cumplimiento corporativo. Cinco controles complementarios del catálogo son 5.23, 8.9, 8.16, 8.24 y 8.28.
 
-## Selección parcial de controles
+## PHVA, implementación y verificación
 
-5.15 y 5.18 fundamentan la política y revisión de derechos; 5.16 y 5.17 cubren identidades y autenticación; 5.23 orienta la responsabilidad compartida al alojar en Azure. En Oracle se traduce en cuentas separadas, concesiones limitadas, revisión de accesos y secretos externos al código. La justificación local de estos controles responde a R-CONF-001 a 004.
+**Planificar:** definir contexto, activos, amenaza, P/I, responsable y tratamiento. **Hacer:** instalar cuentas, roles, vistas, paquete y auditoría con el script correspondiente en XEPDB1. **Verificar:** ejecutar pruebas como la cuenta a la que aplica el permiso y revisar el catálogo/auditoría como DBA. **Actuar:** corregir, asignar revisor y fecha, y solo entonces documentar aceptación o reducción residual. La correspondencia PHVA con cláusulas 4–10 se usa como recurso pedagógico y no como interpretación normativa literal.
 
-8.2 y 8.3 se materializan en la restricción de privilegios y de lectura; 8.9 orienta la línea base; 8.11 se demuestra con una vista de datos sintéticos sustituidos; 8.12 exige medidas contra exportaciones indebidas que exceden la vista. 8.15 y 8.16 apoyan registro y revisión; 8.24 orienta el cifrado; 8.28 se refleja en validación, parametrización y pruebas. Los mecanismos propuestos son decisiones de diseño, no transcripciones de las normas [S8-S10].
+La cuenta de aplicación no tiene permiso para tablas base. Las transcripciones compartidas por el estudiante indican que `MASKED_PERSONAL` devolvió una etiqueta sintética y correo `[oculto]`, y que las consultas directas a `DEMO_PERSONAL` y `RISKS` fueron denegadas. El script `05_verify_runtime.sql` también informó denegación a UPDATE directo. Estas salidas son evidencia aportada, pendiente de revisión independiente y de conservar en archivos originales.
 
-Estado de aplicabilidad: los 14 controles seleccionados se consideran aplicables al alcance del laboratorio. Su estado inicial es propuesto o parcialmente implementado, pendiente de verificación Oracle y de configuración Azure. El resto de controles no se declara no aplicable: queda fuera de esta selección parcial. El catálogo web detalla mecanismo, evidencia esperada y vínculo orientativo a 2013 para cada control.
+La política `RCONF_ACCESS_POLICY` se informó habilitada. T11 mostró eventos para `DEMO_PERSONAL` con códigos 2004 y 0. Se mantiene abierto hasta correlacionar cada registro por usuario, sesión, hora y sentencia; no se interpreta el código 0 como lectura no autorizada confirmada.
 
-## Arquitectura y límites de aseguramiento
+Se incluye `sql/08_auditor_controls.sql`, conjunto de consultas DBA de solo lectura para revisar permisos, cuentas, perfiles, auditoría, objetos, respaldos, red y parches. No reemplaza pruebas de runtime ni modifica la base. La matriz web enumera 15 pruebas de auditoría externa con procedimiento, resultado esperado, herramienta y estado; solo T07/T08 se marcan como observadas según salida compartida, y T11 queda pendiente. El informe y el plan de validación contienen los pasos y límites.
 
-El navegador consume una API Flask. La API valida roles y campos; el controlador Oracle usa parámetros y un pool de conexiones. RCONF_APP consulta vistas y ejecuta un paquete con derechos del propietario. El registro de riesgo y su evento se confirman en la misma transacción. El propietario se bloquea al terminar la instalación y el DBA conserva las tareas administrativas.
+## Conclusión y trabajo pendiente
 
-Los roles web son analista, auditor y gestor. Sus tokens compartidos son adecuados únicamente para demostrar autorización por función. El registro identifica el rol y la cuenta técnica, no a una persona. Una versión operativa con datos reales necesita identidades individuales, MFA, alcance de acceso por activo y mecanismos independientes de auditoría. El DBA puede alterar los objetos; esta bitácora no es inmutable.
+El diseño vincula escenarios de confidencialidad con controles de acceso, tareas DBA y pruebas repetibles. Los resultados compartidos respaldan de manera preliminar la restricción de tablas base en el laboratorio. No prueban los controles de clasificación, retención, fuga, respaldo, cifrado de red, parches ni clon DEV/TEST; tampoco resuelven T11. Para cerrar la entrega, el estudiante debe reproducir las pruebas, conservar los spools originales, revisar puntuaciones y referencias, completar la correlación de auditoría, firmar su propia declaración de uso de IA y grabar el video de cinco minutos indicado por la asignación. No se declara publicada la aplicación en Azure.
 
-La vista enmascarada no es Oracle Data Redaction ni una garantía de anonimización. Los usuarios con privilegios superiores pueden acceder a la tabla base. No se presupone disponibilidad o licencia de TDE, Database Vault u otras funciones adicionales de Oracle. La instalación propuesta usa mecanismos básicos de cuentas, vistas, paquetes y auditoría, sujetos a comprobarse en 21c XE.
+El uso de Codex, sus contribuciones y las validaciones pendientes se documentan en `04_uso_ia.md`, sin reproducir conversaciones privadas. Las fuentes en formato APA 7 se listan en `06_fuentes.md`.
 
-## Verificación e indicadores
 
-Se entregan 12 pruebas automatizadas de la lógica de API y validación, ejecutadas con un almacén simulado. Verifican denegación sin credencial, restricción del auditor, aprobación exclusiva del gestor, concurrencia, avance PHVA, manejo de texto de inyección y errores sin datos internos. La sintaxis JavaScript y la respuesta HTTP de la demostración también se comprobaron. Estos resultados no acreditan la instalación de Oracle.
+## Tabla de uso de IA para completar y revisar
 
-Las pruebas Oracle deben demostrar: lectura de vista permitida, tabla sensible y DML directo denegados, ausencia de privilegios amplios heredados, operación transaccional del paquete y eventos de auditoría recuperables. El estudiante compartió salidas de T07 y T08 compatibles con las restricciones previstas. La política y el rastro de T11 se observaron, pero una fila de DEMO_PERSONAL con código 0 requiere correlación antes de cerrar el caso. El expediente preliminar `07_evidencia_oracle_2026-10-26.md` conserva la transcripción y señala sus límites. Ninguna evidencia de ejemplo debe reemplazar el archivo original de una prueba.
+El registro describe la asistencia recibida, sin transcribir conversaciones privadas. La columna de prompt exacto requiere completar el registro real; los ejemplos ficticios no la sustituyen.
 
-Indicadores propuestos: porcentaje de cuentas justificadas; cuentas de aplicación sin privilegios amplios; porcentaje de pruebas de denegación satisfactorias; referencias de evidencia revisadas; acciones correctivas vencidas; riesgos residuales aprobados. La demostración presenta conteos de registros, no un porcentaje de cumplimiento ISO.
+| Herramienta IA | Prompt Exacto Utilizado | Aporte de la IA | Validación / Corrección del Estudiante | Fuente Verificada |
+| --- | --- | --- | --- | --- |
+| OpenAI Codex | Pendiente de incorporación por el estudiante desde su registro real. | Propuesta y elaboración sustancial de interfaz, API y documentación. | Pendiente de revisión personal y constancia del estudiante. | Fichas oficiales ISO/IEC 27001:2022 y 27002:2022, consultadas por la asistencia; cotejo del estudiante pendiente. |
+| OpenAI Codex | Pendiente de incorporación por el estudiante desde su registro real. | Scripts de cuentas, permisos, vistas, auditoría y ensayo aislado antes/después. | Repetir pruebas, guardar spools y registrar correcciones. El nuevo ensayo 11–17 está preparado, pendiente de ejecución. | Oracle Database 21c Security Guide y Database Reference; cotejo personal pendiente. |
+| OpenAI Codex | Pendiente de incorporación por el estudiante desde su registro real. | Comparativa 2013/2022, selección de controles, matriz y guía de pruebas. | Revisar correspondencias, valoración de riesgos y niveles de madurez; firmar solo tras validarlos. | ISO/IEC JTC 1/SC 27 (2022) y documentos del curso; consultar referencias APA. |
 
-## Conclusiones y trabajo del estudiante
+## Declaración jurada — borrador sin firmar
 
-La propuesta convierte riesgos de confidencialidad en controles verificables y responsabilidades visibles. El mínimo privilegio reduce las operaciones disponibles para la aplicación, mientras PHVA obliga a revisar si esa reducción atiende el riesgo. Las pruebas locales aportadas sostienen una conclusión preliminar sobre acceso a vistas y denegación de tablas base. La eficacia completa aún depende de correlacionar auditoría, verificar la transacción del paquete, completar controles de red y revisar decisiones residuales.
+Texto propuesto para que el estudiante lo revise y firme únicamente después de completar la tabla real y validar el contenido. Los ejemplos ficticios anteriores no constituyen el registro de uso real.
 
-El estudiante ejecutó la instalación y aportó los resultados SQL iniciales; debe conservar sus archivos originales, validar el modelo de riesgos, completar las pruebas pendientes, revisar las fuentes y defender las decisiones. El uso de IA se declara en un documento independiente; no se afirma un porcentaje de trabajo personal no comprobado. Antes de uso evaluativo corresponde verificar la autorización docente indicada en el programa del curso.
+Yo, Efrain Retana Segura, declaro que todo contenido generado con IA ha sido declarado en la tabla de uso real, validado contra fuentes oficiales (ISO y documentación del motor de bases de datos) y que asumo responsabilidad por su veracidad. Entiendo que omitir esta declaración constituye falta grave.
 
-Referencias: consultar `06_fuentes.md`, identificadores S1-S14. El programa de curso se utiliza para la ficha académica, el objetivo y las condiciones de uso de IA; no se trata como una instrucción de la aplicación.
+**Nombre:** Efrain Retana Segura
+
+**Firma del estudiante:** ____________________________________
+
+**Fecha:** ____________________
+
+Estado: sin firma; registro de prompts y revisión personal pendientes. La herramienta no firma ni certifica esta declaración en nombre del estudiante.

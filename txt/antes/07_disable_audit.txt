@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: ANTES
+SCRIPT: 07_disable_audit.sql
+CUENTA / PDB: DBA/AUDIT_ADMIN · XEPDB1
+EFECTO: Reversión · elimina política
+ESPERADO: Usar solo para reversión autorizada; no forma parte de la demostración normal.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

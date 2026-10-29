@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: ANTES
+SCRIPT: 12_case_schema.sql
+CUENTA / PDB: RCONF_CASE_OWNER · XEPDB1
+EFECTO: Crea objetos y concede lectura sintética
+ESPERADO: Acceso inicial medible; no cambia RCONF_APP ni sus tablas.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

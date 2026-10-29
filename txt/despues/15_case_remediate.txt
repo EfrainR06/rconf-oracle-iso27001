@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: DESPUES
+SCRIPT: 15_case_remediate.sql
+CUENTA / PDB: RCONF_CASE_OWNER · XEPDB1
+EFECTO: Revoca lectura directa y concede vista
+ESPERADO: Tabla base denegada; vista enmascarada disponible.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

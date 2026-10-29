@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: DESPUES
+SCRIPT: 18_risk_inventory.sql
+CUENTA / PDB: RCONF_APP · XEPDB1
+EFECTO: Solo lectura
+ESPERADO: Cinco o más registros con evaluación revisada; el conteo no demuestra calidad por sí solo.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

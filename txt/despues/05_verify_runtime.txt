@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: DESPUES
+SCRIPT: 05_verify_runtime.sql
+CUENTA / PDB: RCONF_APP · XEPDB1
+EFECTO: Prueba de autorización
+ESPERADO: Vistas permitidas; tablas y UPDATE denegados. Termina con ROLLBACK.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

@@ -1,53 +1,43 @@
-# Declaración de uso de inteligencia artificial generativa
+# Declaración y tabla de uso de inteligencia artificial
 
-Efrain Retana Segura. EIF402 Administración de Bases de Datos. Universidad Nacional. II Ciclo 2026. Elaboración y revisión asistidas: 25 y 26 de octubre de 2026.
+Efrain Retana Segura. EIF402 Administración de Bases de Datos. Universidad Nacional. II Ciclo 2026.
 
-## Propósito de la declaración
+## Alcance de la asistencia
 
-Este documento registra la asistencia recibida en la preparación de R-CONF Oracle Security Lab. Su finalidad es permitir que el docente distinga el material generado con ayuda de IA de la validación y las contribuciones efectivamente realizadas por el estudiante. La declaración debe actualizarse después de ejecutar las tareas locales y antes de presentar el trabajo.
+El proyecto tiene una participación sustancial de OpenAI Codex en investigación asistida, diseño, código, scripts, documentación y materiales de presentación. La validación técnica de la asistencia comprende pruebas automatizadas con almacén simulado y consultas de lectura con la cuenta limitada. La revisión personal, correcciones, defensa académica y firma corresponden al estudiante. No se asigna un porcentaje de autoría sin evidencia.
 
-El programa del curso, apartado VII, punto 9, indica que el uso evaluativo de IA generativa depende de autorización expresa de la persona docente y exige declarar las herramientas cuando se permita. El estado de esa autorización no fue aportado en esta conversación. Antes de una entrega evaluativa, el estudiante debe comprobar las condiciones correspondientes; este documento no las sustituye.
+La asignación específica permite IA con declaración y validación. Esta versión evita reproducir conversaciones privadas y no atribuye un historial ficticio al estudiante.
 
-## Herramienta y alcance real de la asistencia
+## Tabla de uso de IA para completar y revisar
 
-Se utilizó Codex de OpenAI en una sesión de asistencia. El asistente consultó el programa de curso, fuentes públicas sobre las normas, documentación Oracle y Microsoft, y generó una propuesta extensa de código, scripts, documentos y pruebas. El material entregado tiene una participación sustancial de IA en su elaboración inicial.
+El registro describe la asistencia recibida, sin transcribir conversaciones privadas. La columna de prompt exacto requiere completar el registro real; los ejemplos ficticios no la sustituyen.
 
-La asistencia incluyó interpretación del alcance de confidencialidad; diseño del registro R-CONF y PHVA; interfaz y API; scripts de cuentas, vistas, paquete y auditoría; borradores de documentos; preparación de pruebas automatizadas; revisión de la demostración y preparación del repositorio. No se afirma que esta asistencia consistiera solo en corrección ortográfica o búsqueda bibliográfica.
+| Herramienta IA | Prompt Exacto Utilizado | Aporte de la IA | Validación / Corrección del Estudiante | Fuente Verificada |
+| --- | --- | --- | --- | --- |
+| OpenAI Codex | Pendiente de incorporación por el estudiante desde su registro real. | Propuesta y elaboración sustancial de interfaz, API y documentación. | Pendiente de revisión personal y constancia del estudiante. | Fichas oficiales ISO/IEC 27001:2022 y 27002:2022, consultadas por la asistencia; cotejo del estudiante pendiente. |
+| OpenAI Codex | Pendiente de incorporación por el estudiante desde su registro real. | Scripts de cuentas, permisos, vistas, auditoría y ensayo aislado antes/después. | Repetir pruebas, guardar spools y registrar correcciones. El nuevo ensayo 11–17 está preparado, pendiente de ejecución. | Oracle Database 21c Security Guide y Database Reference; cotejo personal pendiente. |
+| OpenAI Codex | Pendiente de incorporación por el estudiante desde su registro real. | Comparativa 2013/2022, selección de controles, matriz y guía de pruebas. | Revisar correspondencias, valoración de riesgos y niveles de madurez; firmar solo tras validarlos. | ISO/IEC JTC 1/SC 27 (2022) y documentos del curso; consultar referencias APA. |
 
-El asistente confirmó inicialmente que el listener local anunciaba xepdb1. Las pruebas automatizadas de la API se ejecutaron usando un almacén simulado. Posteriormente, el estudiante ejecutó los scripts de instalación y compartió salidas de las pruebas T07, T08 y T11 en Oracle 21c XE. La asistencia interpretó esas salidas y señaló una fila de auditoría que requiere correlación; no accedió con una cuenta DBA a la PDB para verificarlas independientemente. TCPS y conectividad Azure siguen sin probarse; el despliegue en Azure fue pospuesto por el usuario. El expediente preliminar documenta observaciones y límites.
+## Ejemplos ficticios de prompts — no son un historial de uso
 
-## Solicitud efectivamente recibida
+Estos textos son modelos redactados para futuras consultas. No se afirma que el estudiante los haya enviado ni realizado las validaciones que proponen.
 
-La solicitud del estudiante pidió un sitio basado en ISO/IEC 27001:2022 e ISO/IEC 27002:2022 para mitigar riesgos R-CONF de motores Oracle mediante PHVA y mínimo privilegio. También solicitó comparación con 2013, documentos, repositorio GitHub, scripts para Oracle local y orientación para alojar en Azure. Aportó el programa del curso y enlaces de ISO, GlobalSuite, ISOTools y Wikipedia.
+| Herramienta IA | Prompt ficticio de ejemplo | Aporte que se solicitaría | Validación que correspondería al estudiante | Fuente sugerida para validar |
+| --- | --- | --- | --- | --- |
+| Codex | Revisá esta matriz de riesgos Oracle y señalá controles que ayuden a limitar la lectura de datos personales. Proponé una prueba positiva y una negativa por escenario. | Observaciones sobre el diseño y pruebas propuestas. | Contrastar recomendaciones con el contexto y ejecutar las pruebas. | ISO/IEC 27002:2022 y Oracle 21c Security Guide. |
+| Codex | Proponé un ensayo con datos sintéticos que mida acceso a tabla base y vista antes y después de revocar permisos innecesarios. | Borrador de scripts y criterios de aceptación. | Revisar permisos, ejecutar en un entorno aislado y conservar la salida original. | Oracle Database 21c: privilegios y roles. |
+| Codex | Ayudame a explicar las diferencias entre 114 controles de 2013 y 93 de 2022 sin afirmar que se redujo la protección. | Borrador de explicación y preguntas para revisión. | Cotejar ediciones y correspondencias con las fuentes oficiales. | ISO/IEC JTC 1/SC 27 (2022). |
 
-Durante el intercambio el estudiante confirmó Oracle versión 21 y la existencia de una suscripción Azure. Después indicó dejar para más adelante la publicación en Azure. Esos datos orientaron la preparación técnica. Este apartado resume la solicitud real; no es una transcripción íntegra ni un registro automático de todos los mensajes.
+## Declaración jurada — borrador sin firmar
 
-## Ejemplo de prompt para una consulta futura
+Texto propuesto para que el estudiante lo revise y firme únicamente después de completar la tabla real y validar el contenido. Los ejemplos ficticios anteriores no constituyen el registro de uso real.
 
-El siguiente prompt fue redactado como ejemplo y no se presenta como una consulta efectivamente enviada ni como prueba de contribución personal:
+Yo, Efrain Retana Segura, declaro que todo contenido generado con IA ha sido declarado en la tabla de uso real, validado contra fuentes oficiales (ISO y documentación del motor de bases de datos) y que asumo responsabilidad por su veracidad. Entiendo que omitir esta declaración constituye falta grave.
 
-> Revisá mi matriz R-CONF para Oracle 21c XE. Para cada escenario, señalá si el control propuesto limita lecturas indebidas, qué permiso mínimo necesita la cuenta de aplicación y qué prueba positiva y negativa debería ejecutar. Relacioná la decisión con ISO/IEC 27001:2022 e ISO/IEC 27002:2022, explicá las diferencias relevantes frente a 2013 y marcá los puntos que requieran verificación en fuentes oficiales. No atribuyás resultados a pruebas que no haya ejecutado.
+**Nombre:** Efrain Retana Segura
 
-Si el estudiante utiliza este u otro prompt, deberá conservar la consulta real, su respuesta y las correcciones realizadas. No se debe reemplazar un historial existente por uno inventado para aparentar menor intervención de IA.
+**Firma del estudiante:** ____________________________________
 
-## Registro de contribuciones
+**Fecha:** ____________________
 
-- Aporte del estudiante confirmado en la conversación: definición de tema y alcance, identificación personal, archivo del programa del curso, enlaces iniciales, versión Oracle, elección de Azure y decisión de posponer publicación. El estudiante también ejecutó los scripts de instalación y pruebas SQL en XEPDB1, compartió las salidas, conectó la web en modo Oracle y registró un riesgo con referencia EV-001.
-- Aporte inicial del asistente: borrador sustancial de aplicación, scripts, documentación, búsqueda de fuentes y pruebas de lógica. El estudiante debe revisar estos componentes antes de asumir su contenido.
-- Aporte posterior del estudiante pendiente de documentar: guardar archivos originales de las salidas, correlacionar T11, justificar riesgos y decisiones residuales, revisar los cambios de diseño y preparar su demostración oral.
-- En la revisión del 26 de octubre, el estudiante aportó dos audios de un compañero. Se tomaron como sugerencias de presentación: hacer visibles los controles, explicar un escenario ficticio con antes y después, mostrar salidas de scripts y destacar la declaración de IA. Los audios no prueban que el docente haya evaluado este prototipo.
-- Aporte conjunto posible: revisión de hallazgos y adaptación del diseño a partir de resultados. Solo registrar tareas cuando ocurran y vincularlas con commits o evidencias reales.
-
-No se asigna un porcentaje de autoría. Para afirmar que el estudiante realizó la mayor parte se requeriría evidencia verificable de ese trabajo; no se dispone de ella en la elaboración inicial.
-
-## Plantilla para completar tras la validación
-
-Actividad: ____________________. Fecha real: ____________________. Archivo o commit: ____________________. Evidencia restringida: ____________________. Trabajo realizado personalmente: ____________________. Asistencia recibida: ____________________. Corrección o decisión propia y su justificación: ____________________.
-
-Repetir esta ficha para instalación, pruebas de mínimo privilegio, revisión de auditoría, ajustes del modelo de riesgo y despliegue. No copiar las referencias DEM como si fueran resultados personales.
-
-## Revisión responsable del contenido
-
-El estudiante deberá comprobar referencias y denominaciones, comprender los permisos concedidos, explicar el paquete con derechos del definidor y reproducir las pruebas relevantes. Si detecta un error de IA, registrará el problema y la corrección. La responsabilidad por el contenido presentado no se delega a la herramienta.
-
-La documentación no incluye texto completo de las normas ni atribuye una certificación al prototipo. Los escenarios iniciales son sintéticos; las estimaciones residuales requieren verificación. El estudiante deberá usar únicamente material permitido por los lineamientos de la actividad y conservar esta declaración junto a la versión finalmente presentada.
+Estado: sin firma; registro de prompts y revisión personal pendientes. La herramienta no firma ni certifica esta declaración en nombre del estudiante.

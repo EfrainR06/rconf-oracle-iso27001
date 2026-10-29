@@ -31,6 +31,64 @@ class OracleStore:
                 return [dict(json.loads(p.read() if hasattr(p, 'read') else p), id=i, version=v)
                         for i, p, v in cur]
 
+    def list_dba_tasks(self):
+        """Read the task catalog through a view, without access to its base table."""
+        with self.pool().acquire() as conn:
+            conn.call_timeout = 10000
+            with conn.cursor() as cur:
+                cur.execute('SELECT task_id,title,action_description,frequency_proposed,controls,evidence_expected,reference_script,status FROM rconf_owner.v_dba_tasks ORDER BY task_id')
+                return [dict(id=i, task=title, action=action, frequency=frequency,
+                             controls=controls, evidence=evidence, script=script, status=status)
+                        for i, title, action, frequency, controls, evidence, script, status in cur]
+
+    def project_documents(self):
+        with self.pool().acquire() as conn:
+            conn.call_timeout = 10000
+            with conn.cursor() as cur:
+                cur.execute("""SELECT doc_key,payload,version FROM rconf_owner.v_project_data
+                    WHERE doc_key IN ('CATALOG','MATURITY','CASE_BEFORE','CASE_AFTER',
+                    'CASE_DBA_BEFORE','CASE_DBA_AFTER','CURRENT_DIAGNOSTIC',
+                    'RUNTIME_20261029','RISK_INVENTORY_CURRENT',
+                    'DBA_VERIFY_20261029','AUDITOR_CONTROLS_20261029','AUDIT_CORRELATION_20261029',
+                    'T11_CORRELATION_20261029','OBS_INVESTIGATION_PDB','OBS_INVESTIGATION_CDB',
+                    'BACKUP_ACL_20261029')""")
+                return {key: {'data': json.loads(payload.read() if hasattr(payload, 'read') else payload), 'version': version}
+                        for key, payload, version in cur}
+
+    def save_maturity(self, data, version, role):
+        with self.pool().acquire() as conn:
+            conn.call_timeout = 10000
+            with conn.cursor() as cur:
+                payload = cur.var(oracledb.DB_TYPE_CLOB)
+                payload.setvalue(0, json.dumps(data, ensure_ascii=False))
+                new_version = cur.var(int)
+                cur.callproc('rconf_owner.project_api.save_maturity', [payload, version, role, new_version])
+                conn.commit()
+                return new_version.getvalue()
+
+    def database_snapshot(self):
+        """Observe metadata visible to the configured account, without DBA grants."""
+        with self.pool().acquire() as conn:
+            conn.call_timeout = 10000
+            with conn.cursor() as cur:
+                cur.execute("SELECT SYS_CONTEXT('USERENV','SESSION_USER'), SYS_CONTEXT('USERENV','CON_NAME'), SYS_CONTEXT('USERENV','DB_NAME'), SYS_CONTEXT('USERENV','SERVICE_NAME') FROM dual")
+                account, pdb, db_name, service = cur.fetchone()
+                cur.execute("SELECT object_name, object_type, status FROM all_objects WHERE owner='RCONF_OWNER' AND object_type IN ('VIEW','PACKAGE','TABLE') ORDER BY object_type,object_name")
+                objects = [dict(name=n, type=t, status=s) for n,t,s in cur]
+                cur.execute('SELECT privilege FROM session_privs ORDER BY privilege')
+                privileges = [row[0] for row in cur]
+                cur.execute('SELECT role FROM session_roles ORDER BY role')
+                roles = [row[0] for row in cur]
+                cur.execute('SELECT COUNT(*) FROM rconf_owner.risk_view')
+                risk_count = cur.fetchone()[0]
+                cur.execute('SELECT COUNT(*) FROM rconf_owner.event_view')
+                event_count = cur.fetchone()[0]
+        return dict(account=account, pdb=pdb, database=db_name, service=service,
+                    objects=objects, privileges=privileges, roles=roles,
+                    risk_count=risk_count, event_count=event_count,
+                    observed_at=datetime.now(timezone.utc).isoformat(),
+                    scope='Metadatos visibles para la cuenta técnica. No es un inventario DBA completo ni prueba de auditoría unificada.')
+
     def save(self, payload, risk_id, version, role):
         with self.pool().acquire() as conn:
             conn.call_timeout = 10000

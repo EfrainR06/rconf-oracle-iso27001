@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: DESPUES
+SCRIPT: 03_audit.sql
+CUENTA / PDB: DBA/AUDIT_ADMIN · XEPDB1
+EFECTO: Modifica auditoría
+ESPERADO: RCONF_ACCESS_POLICY habilitada. No repetir si ya está instalada.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

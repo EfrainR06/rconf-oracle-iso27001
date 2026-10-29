@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: ANTES
+SCRIPT: 19_audit_correlation.sql
+CUENTA / PDB: DBA · XEPDB1
+EFECTO: Solo lectura
+ESPERADO: Correlación humana con el spool runtime; un resultado vacío o código 0 requiere revisión.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

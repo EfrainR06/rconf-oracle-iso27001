@@ -1,12 +1,48 @@
 # Plan de validación y registro de evidencias
 
+## Correspondencia con la asignación
+
+La matriz interactiva **Controles ISO** contiene los 15 controles requeridos, madurez 0–4, estado de revisión y brecha; el informe PDF resume la fundamentación. El sitio incluye 12 tareas DBA, 15 pruebas de auditoría externa y un script DBA descargable de consultas de solo lectura: `sql/08_auditor_controls.sql`. No todas las tareas están instaladas ni todas las pruebas ejecutadas. En la autoevaluación inicial no se marca ningún control como Cumple.
+
+## Criterios de madurez usados
+
+- **0 — Sin evidencia disponible:** no se localizó evidencia para la revisión de este laboratorio; no demuestra por sí mismo que el control falte en una organización.
+- **1 — Propuesto:** existe diseño, procedimiento o recomendación, pero no se demostró implementación.
+- **2 — Parcialmente implementado:** hay parte de la configuración o documentación, pero falta cobertura, revisión o resultado.
+- **3 — Implementado y probado en laboratorio:** prueba favorable observada en un entorno acotado; no prueba operación sostenida ni alcance organizacional.
+- **4 — Sostenido y revisado:** operación repetida con responsable, revisión independiente, métricas y evidencia vigente.
+
+Niveles iniciales del proyecto: 5.12 (1, No cumple); 5.15 (2, Parcial); 5.16 (1, No cumple); 5.17 (1, No cumple); 5.18 (2, Parcial); 5.33 (1, No cumple); 8.2 (2, Parcial); 8.3 (3, Parcial); 8.5 (1, No cumple); 8.10 (1, No cumple); 8.11 (3, Parcial); 8.12 (1, No cumple); 8.13 (1, No cumple); 8.15 (2, Parcial); 8.20 (1, No cumple). Son valoraciones documentales preliminares basadas en evidencia compartida y diseño del proyecto; el estudiante debe confirmarlas o modificarlas, y fechar la revisión.
+
+## Batería solicitada: 15 pruebas de auditoría externa
+
+El objetivo es que una persona auditora pueda repetir los pasos y observar si se cumple el criterio. **Esperado** expresa el criterio; **estado** distingue salida aportada de evidencia pendiente.
+
+1. **PT-01 — Privilegios (DBA; positiva de revisión):** consultar DBA_SYS_PRIVS, DBA_ROLE_PRIVS y DBA_TAB_PRIVS para RCONF_APP y sus roles. Esperado: sin DBA, ANY ni grant directo innecesario. Herramienta: SQL*Plus y `04_verify_dba.sql`. Estado: consulta de privilegios compartida; conservar spool original y revisar grants heredados.
+2. **PT-02 — Vista enmascarada (positiva):** como RCONF_APP consultar MASKED_PERSONAL. Esperado: solo datos sintéticos/campos aprobados. Herramienta: `05_verify_runtime.sql`. Estado: salida aportada T07; Persona 1 y `[oculto]`.
+3. **PT-03 — Tabla sensible (negativa):** como RCONF_APP consultar RCONF_OWNER.DEMO_PERSONAL. Esperado: ORA-00942 u ORA-01031. Herramienta: SQL*Plus. Estado: salida aportada T07, ORA-00942.
+4. **PT-04 — Vista y tabla de riesgos (positiva/negativa):** leer RISK_VIEW y tratar de leer RISKS. Esperado: vista permitida, base denegada. Herramienta: `05_verify_runtime.sql`. Estado: T08 aportada; la vista estaba vacía.
+5. **PT-05 — DML directo (negativa):** UPDATE directo a RISKS, incluso con condición sin coincidencias. Esperado: denegación. Herramienta: `05_verify_runtime.sql`. Estado: T08 aportada; UPDATE denegado.
+6. **PT-06 — Identidades:** comparar DBA_USERS, estados y dueño de cuentas. Esperado: justificación vigente y bloqueo de cuenta sobrante. Herramienta: DBA/SQL*Plus y acta. Estado: pendiente de acta completa.
+7. **PT-07 — Perfil/autenticación:** cruzar DBA_USERS.PROFILE con DBA_PROFILES y el procedimiento de custodia/rotación. Esperado: política aprobada y aplicada, sin secretos en repositorio. Estado: pendiente.
+8. **PT-08 — Clasificación y máscara:** revisar inventario/clasificación y contrastar columnas de vista con tabla base. Esperado: tratamiento acorde a sensibilidad. Herramienta: `05_verify_runtime.sql` e inventario. Estado: ejemplo de datos sintéticos T07; inventario pendiente.
+9. **PT-09 — Auditoría:** comprobar política y correlacionar UNIFIED_AUDIT_TRAIL por hora, sesión, usuario y SQL. Esperado: eventos atribuibles y denegaciones investigadas. Herramienta: `03_audit.sql` y `04_verify_dba.sql`. Estado: T11 abierto; código 0 para DEMO_PERSONAL requiere correlación.
+10. **PT-10 — Eliminación:** comparar política de retención, DBA_RECYCLEBIN y acta de borrado. Esperado: evidencia de disposición conforme al ciclo de vida; papelera sola no basta. Estado: pendiente.
+11. **PT-11 — Respaldo cifrado:** revisar RMAN/V$BACKUP_PIECE, permisos del repositorio, claves y restauración. Esperado: cifrado/acceso acorde a política y restauración comprobada. Estado: pendiente; no se afirma TDE ni respaldo cifrado en XE.
+12. **PT-12 — Red:** revisar listener, firewall y V$SESSION_CONNECT_INFO. Esperado: orígenes autorizados y cifrado/integridad apropiados. Estado: pendiente; conexión local no evidencia Azure.
+13. **PT-13 — Logs/evidencias:** revisar accesos, retención, escritura/borrado y revisión del almacén. Esperado: custodia restringida e integridad protegida. Estado: pendiente.
+14. **PT-14 — Parches/configuración:** revisar DBA_REGISTRY_SQLPATCH contra una línea base y registros de cambio. Esperado: evaluación y despliegue trazables. Estado: pendiente.
+15. **PT-15 — Clones DEV/TEST/exportación:** comprobar aprobación y sanitización de clones, datos exportados y destinos. Esperado: sin datos productivos en claro y acceso aprobado. Estado: pendiente.
+
+Las consultas DBA agrupadas para varias de estas comprobaciones están en `sql/08_auditor_controls.sql`. No modifican objetos ni permisos; deben ejecutarse con una cuenta DBA en la PDB XEPDB1. No todas las fuentes son consultables por RCONF_APP. La prueba T07/T08 debe ejecutarse por separado usando la cuenta de aplicación.
+
 ## Resultados disponibles
 
 Se ejecutaron 12 pruebas automatizadas de API y dominio con pytest. Resultado inicial: 12 aprobadas. El almacén de datos se simuló; estas pruebas no conectaron a Oracle. También se comprobaron sintaxis JavaScript y respuesta de /health en demostración. La revisión funcional de interfaz se registra en `VERIFICACION.md` al finalizar.
 
 El estudiante compartió salidas de `05_verify_runtime.sql` y `04_verify_dba.sql` ejecutadas en XEPDB1 el 26 de octubre de 2026. T07 y T08 muestran resultados esperados; T11 requiere correlación adicional de una fila de auditoría. Su transcripción y límites figuran en `07_evidencia_oracle_2026-10-26.md`. TCPS, conectividad desde Azure, recuperación y respaldo siguen sin evidencias de ejecución. Para cada ensayo se necesita fecha real, cuenta usada, contenedor, pasos, esperado, observado, conclusión y referencia del archivo original.
 
-El 26 de octubre de 2026 Codex ejecutó en el Oracle local cuatro consultas SELECT predefinidas desde RCONF_APP: vista enmascarada permitida, tabla personal denegada, vista de riesgos permitida y tabla RISKS denegada. Las cuatro devolvieron el resultado esperado; la salida estructurada y su procedencia están en `09_comprobacion_local_2026-10-26.json`. Esta comprobación no ejecutó UPDATE ni consultó el rastro DBA. El estudiante debe revisar y repetir la prueba ante cámara si desea presentarla como trabajo propio observado.
+El 26 de octubre de 2026 Codex ejecutó en el Oracle local cuatro consultas SELECT predefinidas desde RCONF_APP: vista enmascarada permitida, tabla personal denegada, vista de riesgos permitida y tabla RISKS denegada. Las cuatro devolvieron el resultado esperado; la salida estructurada y su procedencia están en `09_comprobacion_local_2026-10-26.json`. Esta comprobación no ejecutó UPDATE ni consultó el rastro DBA. Si el estudiante presenta la ejecución en video, debe identificarla como comprobación asistida y distinguirla de su propia repetición.
 
 ## Casos de aceptación
 

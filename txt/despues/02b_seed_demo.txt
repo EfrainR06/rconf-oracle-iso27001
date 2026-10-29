@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: DESPUES
+SCRIPT: 02b_seed_demo.sql
+CUENTA / PDB: RCONF_OWNER · XEPDB1
+EFECTO: Opcional · escribe datos
+ESPERADO: Ejemplos rotulados DEMO; no son evidencia de controles ejecutados.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

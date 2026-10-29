@@ -21,7 +21,7 @@ Abrir http://127.0.0.1:8000. Inicialmente funciona como demostración: datos sin
 3. Como DBA conectado a la PDB: `sql/01_accounts.sql`.
 4. Como RCONF_OWNER: `sql/02_schema.sql`; opcionalmente `sql/02b_seed_demo.sql` para cargar ejemplos sintéticos claramente identificados.
 5. Como DBA/AUDIT_ADMIN: `sql/03_audit.sql`.
-6. Como RCONF_APP: `sql/05_verify_runtime.sql`. Como DBA: `sql/04_verify_dba.sql`.
+6. Como RCONF_APP: `sql/05_verify_runtime.sql`. Como DBA: `sql/04_verify_dba.sql` y, para la matriz de auditoría, `sql/08_auditor_controls.sql` (solo lectura).
 7. Como DBA: `sql/06_lock_owner.sql` cuando termine la instalación.
 8. Copiar `.env.example` a `.env`, establecer `APP_MODE=oracle`, cuenta RCONF_APP, contraseña y tres tokens distintos de al menos 32 caracteres. Reiniciar el servidor y conectar una sesión en el sitio.
 
@@ -35,7 +35,10 @@ Los scripts son de primera instalación. No son idempotentes ni eliminan objetos
 - PHVA con avance gradual y referencia de evidencia.
 - Recomendaciones por riesgo en cada fase PHVA, basadas en la exposición, los controles elegidos y el residual estimado.
 - Aprobación residual por gestor; auditor de solo lectura.
-- Catálogo visual de 14 controles filtrable por categoría y riesgo registrado, con aplicación propuesta, equivalencia 2013 y evidencia esperada.
+- Catálogo visual de 20 controles: los 15 exigidos por la asignación y 5 complementarios, con propuesta, relación orientativa con 2013 y evidencia esperada.
+- Matriz de madurez inicial 0–4 para los 15 controles, con brechas y estados conservadores Cumple/No cumple/Parcial.
+- Matriz de 12 tareas DBA y batería de 15 pruebas de auditoría externa con procedimiento, esperado, herramienta y resultado disponible.
+- Script DBA de solo lectura `sql/08_auditor_controls.sql`; no cambia usuarios, grants, objetos ni auditoría.
 - Comprobación local guiada de cuatro accesos de RCONF_APP desde la web, sin SQL arbitrario ni privilegios administrativos; resultado descargable en JSON.
 - Expediente preliminar T07, T08 y T11 basado en salidas SQL compartidas por el estudiante; bitácora transaccional Oracle, exportación JSON y fuentes enlazadas.
 - Consultas parametrizadas y cuenta sin DBA ni privilegios ANY.
@@ -64,7 +67,7 @@ La sección **Documentación** de la web permite abrir directamente estos PDF. D
 
 Las pruebas usan un almacén simulado para verificar las reglas de la API; no sustituyen las pruebas de integración con Oracle. Ver `docs/05_validacion.md` para alcance y evidencia.
 
-El estudiante compartió resultados de `05_verify_runtime.sql` y `04_verify_dba.sql` en XEPDB1 el 26 de octubre de 2026. La lectura de vistas y la denegación de tablas base fueron observadas en las salidas aportadas. La correlación de una fila de auditoría de DEMO_PERSONAL sigue pendiente; ver el expediente preliminar.
+El estudiante compartió resultados de `05_verify_runtime.sql` y `04_verify_dba.sql` en XEPDB1 el 26 de octubre de 2026. La lectura de vistas y la denegación de tablas base fueron observadas en las salidas aportadas. La correlación de una fila de auditoría de DEMO_PERSONAL sigue pendiente; ver el expediente preliminar y la nueva matriz de pruebas.
 
 ## Azure
 
@@ -76,4 +79,30 @@ Esta versión es un laboratorio. Los tokens compartidos representan roles, no id
 
 ## Integridad académica
 
-El código y los documentos fueron elaborados con asistencia de Codex. No se inventa un historial de prompts ni un porcentaje de autoría del estudiante. Las contribuciones realizadas por el estudiante deben incorporarse con evidencias al registro de IA. El programa del curso requiere autorización docente para uso evaluativo de IA.
+El código y los documentos fueron elaborados con asistencia sustancial de Codex. La asignación específica permite el uso de IA si se declara y valida. `docs/04_uso_ia.md` registra extractos de prompts reales, los aportes del asistente, la validación que consta en la conversación y una declaración sin firmar para que el estudiante la revise y firme personalmente.
+
+
+## Laboratorio visible y comparación con el video
+
+En Oracle y scripts se consultan metadatos reales con sesión autorizada, se muestran los diez SQL y se comparan archivos .txt locales. Caso de estudio enlaza el recorrido a los scripts. Ver docs/10_pruebas_y_video.md para pruebas y diferencias frente al video de referencia. La revisión del 28 de octubre tiene 15 pruebas de API/dominio aprobadas (almacén simulado) y cuatro SELECT de autorización comprobados con RCONF_APP en XEPDB1. El rastro DBA/T11 sigue pendiente.
+
+
+## Auditoría medida antes/después y TXT
+
+La página #audit compara tres pruebas del caso aislado con TXT originales y permite un expediente por cada uno de los 17 scripts. sql/11-17 preparan el estado inicial sintético, medición, tratamiento y repetición; requieren ejecución del estudiante/DBA. txt/scripts contiene el mismo código en TXT y txt/antes, txt/despues son fichas pendientes, nunca evidencia ejecutada. Ver docs/11_caso_antes_despues.md. El ZIP se descarga desde /downloads/auditoria-txt.zip.
+
+La declaración de IA usa el registro real pendiente de completar sin citas privadas. Los prompts ficticios están identificados como ejemplos y no se atribuyen como usados por el estudiante.
+
+### Abrir SQL*Plus con la cuenta de la aplicacion
+
+En Windows, ejecuta `abrir-oracle-app.cmd` desde esta carpeta. Usa SQL*Plus real con las credenciales del `.env` en memoria: no coloca la contrasena en argumentos del proceso, archivos SQL ni historial. Comprueba `RCONF_APP / XEPDB1` antes de habilitar las consultas.
+
+Esta consola permite consultas y scripts como `@sql/05_verify_runtime.sql`. `CONNECT`, `PASSWORD` y `ACCEPT` requieren SQL*Plus habitual; los instaladores DBA y los scripts del caso con otras cuentas deben abrirse en sus propias sesiones. Al cerrar por interrupcion se solicita rollback. Para una comprobacion sin sesion interactiva: `.venv\Scripts\python.exe tools\oracle_app_console.py --check`.
+
+### Catalogo real de tareas DBA
+
+Las 12 tareas propuestas se almacenan en RCONF_OWNER.RCONF_DBA_TASKS y se consultan por RCONF_OWNER.V_DBA_TASKS mediante roles de lectura. `sql/20_dba_task_catalog.sql` es instalador de primera vez; no repetirlo en una PDB instalada. El estado inicial PENDIENTE y las frecuencias son planificacion, no evidencia de ejecucion. La aplicacion consulta el catalogo y no concede acceso a su tabla base.
+
+### Expediente de controles en Oracle
+
+Los catalogos de controles y pruebas, la matriz y copias de las capturas del caso se consultan desde RCONF_OWNER.V_PROJECT_DATA. El analista o gestor guarda la matriz con PROJECT_API y control de version; las tablas base no se conceden a RCONF_APP. `sql/21_project_data.sql` es un instalador inicial: no ejecutarlo de nuevo sobre este esquema. Los resultados de scripts 14 y 16 se incorporaron por separado y deben revisarse junto con los originales locales.

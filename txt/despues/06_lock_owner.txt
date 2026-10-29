@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: DESPUES
+SCRIPT: 06_lock_owner.sql
+CUENTA / PDB: DBA · XEPDB1
+EFECTO: Revoca DDL y bloquea owner
+ESPERADO: Owner bloqueado; aplicación y paquete continúan operando. Repetir runtime después.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.

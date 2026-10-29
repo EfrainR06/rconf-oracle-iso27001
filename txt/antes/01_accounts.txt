@@ -1,0 +1,13 @@
+PENDIENTE - NO EJECUTADO
+ETAPA: ANTES
+SCRIPT: 01_accounts.sql
+CUENTA / PDB: SYS/DBA · XEPDB1
+EFECTO: Primera instalación
+ESPERADO: Cuentas distintas y grants específicos. Solicita claves privadas; no usar SPOOL.
+
+FECHA REAL: ______________
+EJECUTOR: ______________
+REVISOR: ______________
+SALIDA ORIGINAL: cargar el TXT generado por SQLPlus, sin editar resultados.
+Esta plantilla no es evidencia ni una ejecucion de Oracle.
+No capturar contrasenas; no repetir instalacion para producir una comparacion.
